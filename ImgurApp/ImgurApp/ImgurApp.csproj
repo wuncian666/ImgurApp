@@ -63,6 +63,12 @@
     <Compile Include="Components\GalleryItem.Designer.cs">
       <DependentUpon>GalleryItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\PaginationComponent\Pagination.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\PaginationComponent\Pagination.Designer.cs">
+      <DependentUpon>Pagination.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contracts\GalleryContract.cs" />
     <Compile Include="GalleryForm.cs">
       <SubType>Form</SubType>
@@ -73,9 +79,11 @@
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SecretsConfig.cs" />
     <EmbeddedResource Include="Components\GalleryItem.resx">
       <DependentUpon>GalleryItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\PaginationComponent\Pagination.resx">
+      <DependentUpon>Pagination.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GalleryForm.resx">
       <DependentUpon>GalleryForm.cs</DependentUpon>
@@ -98,9 +106,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="secrets.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

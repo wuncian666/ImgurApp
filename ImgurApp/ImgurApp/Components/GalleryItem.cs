@@ -17,6 +17,7 @@ namespace ImgurApp.Components
         {
             InitializeComponent();
             imgurPicture.LoadAsync($"https://imgur.com/{item.cover}.jpg");
+            titleLabel.Text = item.title;
             score.Text = item.score.ToString();
             commentCount.Text = item.comment_count.ToString();
             views.Text = item.views.ToString();

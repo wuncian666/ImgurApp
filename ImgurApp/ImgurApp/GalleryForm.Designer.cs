@@ -39,6 +39,7 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pageLabel = new System.Windows.Forms.Label();
             this.searchPanel = new System.Windows.Forms.Panel();
+            this.pagination1 = new ImgurApp.Components.PaginationComponent.Pagination();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.searchPanel.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +57,7 @@
             // queryTextBox
             // 
             this.queryTextBox.Location = new System.Drawing.Point(68, 28);
-            this.queryTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.queryTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.queryTextBox.Name = "queryTextBox";
             this.queryTextBox.Size = new System.Drawing.Size(232, 29);
             this.queryTextBox.TabIndex = 1;
@@ -74,11 +75,10 @@
             // galleryContainer
             // 
             this.galleryContainer.AutoScroll = true;
-            this.galleryContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.galleryContainer.Location = new System.Drawing.Point(0, 0);
-            this.galleryContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.galleryContainer.Location = new System.Drawing.Point(19, 126);
+            this.galleryContainer.Margin = new System.Windows.Forms.Padding(4);
             this.galleryContainer.Name = "galleryContainer";
-            this.galleryContainer.Size = new System.Drawing.Size(1221, 722);
+            this.galleryContainer.Size = new System.Drawing.Size(1089, 538);
             this.galleryContainer.TabIndex = 3;
             // 
             // sortComboBox
@@ -148,11 +148,19 @@
             this.searchPanel.Size = new System.Drawing.Size(1221, 100);
             this.searchPanel.TabIndex = 0;
             // 
+            // pagination1
+            // 
+            this.pagination1.Location = new System.Drawing.Point(19, 696);
+            this.pagination1.Name = "pagination1";
+            this.pagination1.Size = new System.Drawing.Size(933, 83);
+            this.pagination1.TabIndex = 0;
+            // 
             // GalleryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 722);
+            this.ClientSize = new System.Drawing.Size(1221, 804);
+            this.Controls.Add(this.pagination1);
             this.Controls.Add(this.galleryContainer);
             this.Controls.Add(this.searchPanel);
             this.Name = "GalleryForm";
@@ -177,6 +185,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label pageLabel;
         private System.Windows.Forms.Panel searchPanel;
+        private Components.PaginationComponent.Pagination pagination1;
     }
 }
 
