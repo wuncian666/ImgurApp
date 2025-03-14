@@ -63,12 +63,15 @@
     <Compile Include="Components\GalleryItem.Designer.cs">
       <DependentUpon>GalleryItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\PaginationComponent\Direction.cs" />
     <Compile Include="Components\PaginationComponent\Pagination.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\PaginationComponent\Pagination.Designer.cs">
       <DependentUpon>Pagination.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\PaginationComponent\PaginationContract.cs" />
+    <Compile Include="Components\PaginationComponent\PaginationPresenter.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
     <Compile Include="GalleryForm.cs">
       <SubType>Form</SubType>

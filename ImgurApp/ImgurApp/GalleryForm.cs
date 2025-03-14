@@ -20,6 +20,8 @@ namespace ImgurApp
     {
         private readonly IGalleryPresenter _presenter;
 
+        private GallerySearchModel _response;
+
         public GalleryForm()
         {
             InitializeComponent();
@@ -30,17 +32,26 @@ namespace ImgurApp
                 new string[] { "day", "week", "month", "year", "all" };
 
             this._presenter = new GalleryPresenter(this);
+            this.pagination1.ItemPrePages = 4;
+            this.pagination1.PageNumberChange += PageNumberChange;
+        }
+
+        private void PageNumberChange(object sender, int e)
+        {
+            Console.WriteLine("page:" + e);
+            galleryContainer.Controls.Clear();
+
+            for (int i = e; i < e + pagination1.ItemPrePages; i++)
+            {
+                GalleryItem image = new GalleryItem(_response.data[i]);
+                galleryContainer.Controls.Add(image);
+            }
         }
 
         public void ShowGallery(GallerySearchModel response)
         {
-            galleryContainer.Controls.Clear();
-
-            foreach (var item in response.data)
-            {
-                GalleryItem image = new GalleryItem(item);
-                galleryContainer.Controls.Add(image);
-            }
+            this._response = response;
+            pagination1.TotalItems = response.data.Length;
         }
 
         private void SearchButton_Click(object sender, EventArgs e)

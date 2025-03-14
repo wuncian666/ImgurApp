@@ -8,186 +8,183 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics.Eventing.Reader;
+using static ImgurApp.Components.PaginationComponent.PaginationContract;
 
 namespace ImgurApp.Components.PaginationComponent
 {
-    public partial class Pagination : UserControl
+    public partial class Pagination : UserControl, IPaginationView
     {
-        private int itemsPerPage = 10; // 一頁幾筆
-        private int totalItems = 378;
-        private int totalPages;
-        private int baseVisiblePages = 10;
-        private int currentPagination = 1;
-        private int currentPage = 0;
+        private Button previous = null;
+        private readonly PaginationPresenter presenter;
+
+        public event EventHandler<int> PageNumberChange;
+
+        public int TotalItems
+        {
+            set
+            {
+                presenter.TotalItems = value;
+                presenter.InitialPages();
+            }
+        }
+
+        public int ItemPrePages
+        {
+            get
+            {
+                return presenter.ItemsPerPage;
+            }
+            set
+            {
+                presenter.ItemsPerPage = value;
+            }
+        }
 
         public Pagination()
         {
             InitializeComponent();
-
-            // ex : 379 / 10 = 37 ... 9
-            // ex : 4 / 10 = 0 ... 4
-            this.totalPages = this.totalItems % this.itemsPerPage == 0
-                ? this.totalItems / this.itemsPerPage
-                : this.totalItems / this.itemsPerPage + 1;
-            Console.WriteLine($"Total Pages: {this.totalPages}");
-            this.CreatePagination();
+            presenter = new PaginationPresenter(this);
         }
 
-        private void NextBtn_Click(object sender, EventArgs e)
-        {
-            int currentVisiblePages = this.CalculateCurrentVisiblePages(this.currentPagination);
-            Console.WriteLine($"Before: Pagination={currentPagination}, Page={currentPage}");
-            if (this.currentPage < currentVisiblePages - 1)
-            {
-                this.currentPage++;
-            }
-            else if (this.HasNextButton())
-            {
-                this.currentPagination++;
-                this.currentPage = 0;
-            }
-            Console.WriteLine($"After: Pagination={currentPagination}, Page={currentPage}");
-            this.CreatePagination();
-        }
-
-        private void PreviousBtn_Click(object sender, EventArgs e)
-        {
-            Console.WriteLine($"Before: Pagination={currentPagination}, Page={currentPage}");
-            if (this.currentPage > 0)
-            {
-                this.currentPage--;
-            }
-            else if (this.HasPreviousButton())
-            {
-                this.currentPagination--;
-                this.currentPage = this.CalculateCurrentVisiblePages(this.currentPagination) - 1;
-            }
-            Console.WriteLine($"After: Pagination={currentPagination}, Page={currentPage}");
-            this.CreatePagination();
-        }
-
-        private bool HasPreviousButton()
-        {
-            return this.currentPagination > 1 || this.currentPage > 0;
-        }
-
-        private bool HasNextButton()
-        {
-            int currentAbsolutePage = (this.currentPagination - 1) * this.baseVisiblePages + this.currentPage + 1;
-
-            return currentAbsolutePage < this.totalPages;
-        }
-
-        private void CreatePagination()
+        public void RenderPagationList(List<int> pages)
         {
             paginationPanel.Controls.Clear();
 
-            if (this.HasPreviousButton())
+            this.AddPrevious5PageButton();
+
+            this.AddPreviousButton();
+
+            for (int i = 0; i < pages.Count; i++)
             {
-                this.AddPreviousButton();
-            }
-            int currentVisiblePages = this.CalculateCurrentVisiblePages(this.currentPagination);
-            Console.WriteLine($"Current Visible Pages: {currentVisiblePages}");
-            int startPage = (this.currentPagination - 1) * this.baseVisiblePages + 1;
-            Console.WriteLine($"Start Page: {startPage}");
-            for (int i = 0; i < currentVisiblePages; i++)
-            {
-                int pageNumber = startPage + i;
-                this.AddCurrentPageButton(pageNumber, i);
+                this.AddPageButton(pages[i]);
             }
 
-            if (this.HasNextButton())
+            this.AddNextButton();
+
+            this.AddNext5PageButon();
+        }
+
+        private void ChangePage_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            Direction direction = (Direction)button.Tag;
+            this.presenter.ChangePage(direction);
+        }
+
+        public void ActivePageIndex(int page)
+        {
+            ResetPageButton();
+
+            foreach (Control control in paginationPanel.Controls)
             {
-                this.AddNextButton();
+                if (control is Button btn)
+                {
+                    Console.WriteLine($"act page = {page}, btn = {btn.Text}");
+                    if (btn.Text == page.ToString())
+                    {
+                        Console.WriteLine($"btn = {btn.Text}");
+                        btn.BackColor = Color.Blue;
+                        btn.ForeColor = Color.White;
+                        previous = btn;
+                    }
+                }
             }
+
+            this.EnabledPreviousNextButton();
+
+            PageNumberChange?.Invoke(this, page);
+        }
+
+        private void EnabledPreviousNextButton()
+        {
+            if (paginationPanel.Controls.Count == 0)
+            {
+                return;
+            }
+            Button previousBtn = paginationPanel.Controls.OfType<Button>().First(x => x.Tag != null && x.Tag.Equals(Direction.Previous));
+            previousBtn.Enabled = !(presenter.CurrentPage == 1);
+            int last = paginationPanel.Controls.Count;
+            Button nextBtn = paginationPanel.Controls.OfType<Button>().First(x => x.Tag != null && x.Tag.Equals(Direction.Next));
+            nextBtn.Enabled = !(presenter.CurrentPage == presenter.MaxPage);
+        }
+
+        private void ResetPageButton()
+        {
+            if (previous != null)
+            {
+                previous.BackColor = Color.Empty;
+                previous.ForeColor = Color.Black;
+            }
+        }
+
+        private void AddPageButton(int page)
+        {
+            Button button = new Button
+            {
+                Height = 35,
+                Width = 35,
+                Text = page.ToString()
+            };
+            button.Click += Page_Click;
+            paginationPanel.Controls.Add(button);
+        }
+
+        private void Page_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            this.presenter.CurrentPage = int.Parse(button.Text);
         }
 
         private void AddPreviousButton()
         {
-            Button backBtn = new Button
+            Button button = new Button
             {
+                Height = 35,
+                Width = 35,
                 Text = "<",
-                Width = 45,
-                Height = 45
+                Tag = Direction.Previous
             };
-
-            backBtn.Click += PreviousBtn_Click;
-
-            if (this.currentPagination == 1 && this.currentPage == 0)
-            {
-                backBtn.Enabled = false;
-                backBtn.BackColor = Color.Gray;
-                backBtn.ForeColor = Color.Black;
-            }
-            else
-            {
-                backBtn.Enabled = true;
-                backBtn.BackColor = Color.Empty;
-                backBtn.BackColor = Color.Empty;
-            }
-            paginationPanel.Controls.Add(backBtn);
-        }
-
-        private void AddCurrentPageButton(int pageNumber, int index)
-        {
-            Button currentPageBtn = new Button
-            {
-                Text = pageNumber.ToString(),
-                Width = 45,
-                Height = 45
-            };
-
-            if (index == this.currentPage)
-            {
-                currentPageBtn.BackColor = Color.Blue;
-                currentPageBtn.ForeColor = Color.White;
-            }
-
-            currentPageBtn.Click += (s, e) =>
-            {
-                this.currentPage = index;
-                this.CreatePagination();
-            };
-            paginationPanel.Controls.Add(currentPageBtn);
+            button.Click += ChangePage_Click;
+            paginationPanel.Controls.Add(button);
         }
 
         private void AddNextButton()
         {
-            Button nextBtn = new Button
+            Button button = new Button
             {
+                Height = 35,
+                Width = 35,
                 Text = ">",
-                Width = 45,
-                Height = 45
+                Tag = Direction.Next
             };
-            nextBtn.Click += NextBtn_Click;
-            int currentAbsolutePage = (this.currentPagination - 1) * this.baseVisiblePages + this.currentPage + 1;
-
-            if (currentAbsolutePage == this.totalPages) // 最後一頁
-            {
-                nextBtn.Enabled = false;
-                nextBtn.BackColor = Color.Gray;
-                nextBtn.ForeColor = Color.Black;
-            }
-            else
-            {
-                nextBtn.Enabled = true;
-                nextBtn.BackColor = Color.Empty;
-                nextBtn.BackColor = Color.Empty;
-            }
-            paginationPanel.Controls.Add(nextBtn);
+            button.Click += ChangePage_Click;
+            paginationPanel.Controls.Add(button);
         }
 
-        private int CalculateCurrentVisiblePages(int currentPagination)
+        private void AddNext5PageButon()
         {
-            int totalPaginations = (this.totalPages - 1) / this.baseVisiblePages + 1;
-            Console.WriteLine($"Total Paginations: {totalPaginations}, Total Pages: {this.totalPages}");
-            if (currentPagination == totalPaginations)
+            Button button = new Button
             {
-                // 最後一個pagination的頁數
-                int remainingPages = totalPages - (currentPagination - 1) * this.baseVisiblePages;
-                return remainingPages;
-            }
-            return this.baseVisiblePages;
+                Height = 35,
+                Width = 35,
+                Text = ">>",
+                Tag = Direction.Next5
+            };
+            button.Click += ChangePage_Click;
+            paginationPanel.Controls.Add(button);
+        }
+
+        private void AddPrevious5PageButton()
+        {
+            Button button = new Button
+            {
+                Height = 35,
+                Width = 35,
+                Text = "<<",
+                Tag = Direction.Previous5
+            };
+            button.Click += ChangePage_Click;
+            paginationPanel.Controls.Add(button);
         }
     }
 }

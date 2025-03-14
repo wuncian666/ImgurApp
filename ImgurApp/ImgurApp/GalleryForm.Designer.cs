@@ -150,10 +150,10 @@
             // 
             // pagination1
             // 
-            this.pagination1.Location = new System.Drawing.Point(19, 696);
+            this.pagination1.Location = new System.Drawing.Point(175, 709);
             this.pagination1.Name = "pagination1";
             this.pagination1.Size = new System.Drawing.Size(933, 83);
-            this.pagination1.TabIndex = 0;
+            this.pagination1.TabIndex = 4;
             // 
             // GalleryForm
             // 
