@@ -126,6 +126,10 @@ namespace ImgurApp.Components.PaginationComponent
 
                 this._view.RenderPagationList(pages);
             }
+            else
+            {
+                this._view.ActivePageIndex(CurrentPage);
+            }
         }
 
         private void Next5Page()
@@ -147,6 +151,10 @@ namespace ImgurApp.Components.PaginationComponent
 
                 this._view.RenderPagationList(pages);
             }
+            else
+            {
+                this._view.ActivePageIndex(CurrentPage);
+            }
         }
 
         private void PreviousPage()
@@ -163,6 +171,9 @@ namespace ImgurApp.Components.PaginationComponent
                 var pages = CreatePageNumbers(start, end);
 
                 this._view.RenderPagationList(pages);
+            } else
+            {
+                this._view.ActivePageIndex(CurrentPage);
             }
         }
 
@@ -183,6 +194,10 @@ namespace ImgurApp.Components.PaginationComponent
                 var pages = CreatePageNumbers(newStartPage, end);
 
                 this._view.RenderPagationList(pages);
+            }
+            else
+            {
+                this._view.ActivePageIndex(CurrentPage);
             }
         }
     }

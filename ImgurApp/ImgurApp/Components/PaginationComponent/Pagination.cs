@@ -62,6 +62,8 @@ namespace ImgurApp.Components.PaginationComponent
             this.AddNextButton();
 
             this.AddNext5PageButon();
+
+            this.ActivePageIndex(this.presenter.CurrentPage);
         }
 
         private void ChangePage_Click(object sender, EventArgs e)
