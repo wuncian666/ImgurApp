@@ -21,7 +21,6 @@ namespace ImgurApp.Components.PaginationComponent
             set
             {
                 _totalItems = value;
-                Console.WriteLine($"total items = {_totalItems}");
                 MaxPage =
                     _totalItems % ItemsPerPage == 0 ?
                     _totalItems / ItemsPerPage :
@@ -32,7 +31,7 @@ namespace ImgurApp.Components.PaginationComponent
 
         public int ItemsPerPage { get; set; }
 
-        // 一個pagination 幾個page
+        // 一個 pagination 幾個page
         public int PagesCount { get; set; } = 10;
 
         public int MaxPage { get; set; }
@@ -94,7 +93,8 @@ namespace ImgurApp.Components.PaginationComponent
 
         public void InitialPages()
         {
-            int pagesCount = (PagesCount < MaxPage) ?
+            int pagesCount =
+                (PagesCount < MaxPage) ?
                 PagesCount : MaxPage % PagesCount;
             var pages = CreatePageNumbers(1, pagesCount);
             this._view.RenderPagationList(pages);
@@ -139,16 +139,13 @@ namespace ImgurApp.Components.PaginationComponent
                 return;
             }
 
-            //25 / 10 + 1 3
             int oldStartPage = ((CurrentPage - 1) / PagesCount) * PagesCount + 1;
             CurrentPage += 5;
-            //30 / 10 + 1 4
             int newStartPage = ((CurrentPage - 1) / PagesCount) * PagesCount + 1;
             if (oldStartPage != newStartPage)
             {
                 int end = Math.Min(newStartPage + PagesCount - 1, MaxPage);
                 var pages = CreatePageNumbers(newStartPage, end);
-
                 this._view.RenderPagationList(pages);
             }
             else
@@ -169,9 +166,9 @@ namespace ImgurApp.Components.PaginationComponent
                 int start = CurrentPage - PagesCount + 1;
                 int end = CurrentPage;
                 var pages = CreatePageNumbers(start, end);
-
                 this._view.RenderPagationList(pages);
-            } else
+            }
+            else
             {
                 this._view.ActivePageIndex(CurrentPage);
             }
@@ -183,16 +180,14 @@ namespace ImgurApp.Components.PaginationComponent
             {
                 return;
             }
-            // 11 , 10/10 + 1
+
             int oldStartPage = ((CurrentPage - 1) / PagesCount) * PagesCount + 1;
-            // 8/10 + 1 = 1
             CurrentPage -= 5;
             int newStartPage = ((CurrentPage - 1) / PagesCount) * PagesCount + 1;
             if (oldStartPage != newStartPage)
             {
                 int end = Math.Min(newStartPage + PagesCount - 1, MaxPage);
                 var pages = CreatePageNumbers(newStartPage, end);
-
                 this._view.RenderPagationList(pages);
             }
             else
