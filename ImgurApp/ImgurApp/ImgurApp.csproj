@@ -57,12 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\GalleryItem.cs">
+    <Compile Include="Components\GalleryItemComponent\GalleryItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\GalleryItem.Designer.cs">
+    <Compile Include="Components\GalleryItemComponent\GalleryItem.Designer.cs">
       <DependentUpon>GalleryItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\GalleryItemComponent\Vote.cs" />
     <Compile Include="Components\PaginationComponent\Direction.cs" />
     <Compile Include="Components\PaginationComponent\Pagination.cs">
       <SubType>UserControl</SubType>
@@ -73,16 +74,18 @@
     <Compile Include="Components\PaginationComponent\PaginationContract.cs" />
     <Compile Include="Components\PaginationComponent\PaginationPresenter.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
+    <Compile Include="Contracts\GalleryItemContract.cs" />
     <Compile Include="GalleryForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GalleryForm.Designer.cs">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Components\GalleryItem.resx">
+    <EmbeddedResource Include="Components\GalleryItemComponent\GalleryItem.resx">
       <DependentUpon>GalleryItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\PaginationComponent\Pagination.resx">
