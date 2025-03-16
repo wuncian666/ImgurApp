@@ -19,6 +19,7 @@ namespace ImgurApp.Components.PaginationComponent
 
         public event EventHandler<int> PageNumberChange;
 
+        // 只有一開始發 api 時會拿到 total item 的值
         public int TotalItems
         {
             set
@@ -81,10 +82,8 @@ namespace ImgurApp.Components.PaginationComponent
             {
                 if (control is Button btn)
                 {
-                    Console.WriteLine($"act page = {page}, btn = {btn.Text}");
                     if (btn.Text == page.ToString())
                     {
-                        Console.WriteLine($"btn = {btn.Text}");
                         btn.BackColor = Color.Blue;
                         btn.ForeColor = Color.White;
                         previous = btn;
@@ -103,10 +102,15 @@ namespace ImgurApp.Components.PaginationComponent
             {
                 return;
             }
-            Button previousBtn = paginationPanel.Controls.OfType<Button>().First(x => x.Tag != null && x.Tag.Equals(Direction.Previous));
+
+            Button previousBtn =
+                paginationPanel.Controls.OfType<Button>()
+                .First(x => x.Tag != null && x.Tag.Equals(Direction.Previous));
             previousBtn.Enabled = !(presenter.CurrentPage == 1);
-            int last = paginationPanel.Controls.Count;
-            Button nextBtn = paginationPanel.Controls.OfType<Button>().First(x => x.Tag != null && x.Tag.Equals(Direction.Next));
+
+            Button nextBtn =
+                paginationPanel.Controls.OfType<Button>()
+                .First(x => x.Tag != null && x.Tag.Equals(Direction.Next));
             nextBtn.Enabled = !(presenter.CurrentPage == presenter.MaxPage);
         }
 
