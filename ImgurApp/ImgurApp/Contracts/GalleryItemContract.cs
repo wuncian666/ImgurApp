@@ -2,6 +2,7 @@
 using ImgurApp.Components.GalleryItemComponent;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ namespace ImgurApp.Contracts
 {
     public interface IGalleryItemPresenter
     {
-        Task AlbumOrImageVoting(String galleryHash, Vote vote);
+        void AlbumOrImageVoting(GalleryItemModel item);
     }
 
     public interface IGalleryItemView
     {
-        void UpdateGalleryItem(Vote vote);
+        void UpdateGalleryItem(GalleryItemModel item);
     }
 }

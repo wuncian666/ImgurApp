@@ -21,9 +21,9 @@ namespace ImgurApp.Presenters
         public async Task SearchGalleryAsync(GallerySearchParam param)
         {
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
-            GallerySearchModel model =
+            GallerySearchModel response =
                 await context.Gallery.GallerySearch(param);
-            this._view.ShowGallery(model);
+            this._view.ShowGallery(response);
         }
     }
 }

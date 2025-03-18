@@ -3,6 +3,7 @@ using ImgurApp.Components.GalleryItemComponent;
 using ImgurApp.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,17 +19,17 @@ namespace ImgurApp.Presenters
             this._view = view;
         }
 
-        public async Task AlbumOrImageVoting(string galleryHash, Vote vote)
+        public void AlbumOrImageVoting(GalleryItemModel item)
         {
+            // 處理投票結果
+            item.HandleVoteAction();
+
+            // 發送 API 請求
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
-            string voteStr = vote.ToString().ToLower();
-            AlbumImageVotingModel response =
-                await context.Album.AlbumImageVoting(galleryHash, voteStr);
-            if (response != null && response.success && response.status == 200)
-            {
-                Console.WriteLine("vote success");
-                this._view.UpdateGalleryItem(vote);
-            }
+            string voteStr = item.NewVote.ToString().ToLower();
+            context.Album.AlbumImageVoting(item.Data.id, voteStr);
+
+            _view.UpdateGalleryItem(item);
         }
     }
 }
