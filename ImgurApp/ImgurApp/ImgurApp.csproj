@@ -57,41 +57,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\GalleryItemComponent\GalleryItem.cs">
+    <Compile Include="Components\GalleryItemComponent\GalleryItemForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\GalleryItemComponent\GalleryItem.Designer.cs">
-      <DependentUpon>GalleryItem.cs</DependentUpon>
+    <Compile Include="Components\GalleryItemComponent\GalleryItemForm.Designer.cs">
+      <DependentUpon>GalleryItemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\GalleryItemComponent\Vote.cs" />
     <Compile Include="Components\PaginationComponent\Direction.cs" />
-    <Compile Include="Components\PaginationComponent\Pagination.cs">
+    <Compile Include="Components\PaginationComponent\PaginationComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\PaginationComponent\Pagination.Designer.cs">
-      <DependentUpon>Pagination.cs</DependentUpon>
+    <Compile Include="Components\PaginationComponent\PaginationComponent.Designer.cs">
+      <DependentUpon>PaginationComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\PaginationComponent\PaginationContract.cs" />
     <Compile Include="Components\PaginationComponent\PaginationPresenter.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
     <Compile Include="Contracts\GalleryItemContract.cs" />
-    <Compile Include="GalleryForm.cs">
+    <Compile Include="Forms\GalleryDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GalleryForm.Designer.cs">
+    <Compile Include="Forms\GalleryDetailForm.Designer.cs">
+      <DependentUpon>GalleryDetailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GalleryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GalleryForm.Designer.cs">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\GalleryItemModel.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Components\GalleryItemComponent\GalleryItem.resx">
-      <DependentUpon>GalleryItem.cs</DependentUpon>
+    <EmbeddedResource Include="Components\GalleryItemComponent\GalleryItemForm.resx">
+      <DependentUpon>GalleryItemForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\PaginationComponent\Pagination.resx">
-      <DependentUpon>Pagination.cs</DependentUpon>
+    <EmbeddedResource Include="Components\PaginationComponent\PaginationComponent.resx">
+      <DependentUpon>PaginationComponent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GalleryForm.resx">
+    <EmbeddedResource Include="Forms\GalleryDetailForm.resx">
+      <DependentUpon>GalleryDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GalleryForm.resx">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
