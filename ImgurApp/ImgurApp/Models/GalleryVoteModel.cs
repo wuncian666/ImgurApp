@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace ImgurApp
 {
-    public class GalleryItemModel
+    public class GalleryVoteModel
     {
-        public GallerySearchModel.Datum Data { get; set; }
+        //public GallerySearchModel.Datum Data { get; set; }
 
-        public int Score { get; set; }
+        public string ItemId { get; set; }
+
+        public int NewScore { get; set; }
+
+        public int OldScore { get; set; }
 
         public Vote? NewVote { get; set; }
 
@@ -60,7 +64,7 @@ namespace ImgurApp
 
         private void ResetScore()
         {
-            Score = Data.score;
+            NewScore = OldScore;
         }
 
         private void ResetColor()
@@ -71,13 +75,13 @@ namespace ImgurApp
 
         private void VoteUp()
         {
-            Score++;
+            NewScore++;
             UpLabelColor = Color.Green;
         }
 
         private void VoteDown()
         {
-            Score--;
+            NewScore--;
             DownLabelColor = Color.Red;
         }
     }

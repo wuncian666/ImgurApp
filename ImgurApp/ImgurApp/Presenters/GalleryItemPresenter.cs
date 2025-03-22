@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace ImgurApp.Presenters
 {
-    internal class GalleryItemPresenter : IGalleryItemPresenter
+    internal class GalleryItemPresenter : IGalleryVotePresenter
     {
-        private readonly IGalleryItemView _view;
+        private readonly IGalleryVoteView _view;
 
-        public GalleryItemPresenter(IGalleryItemView view)
+        public GalleryItemPresenter(IGalleryVoteView view)
         {
             this._view = view;
         }
 
-        public void AlbumOrImageVoting(GalleryItemModel item)
+        public void AlbumOrImageVoting(GalleryVoteModel item)
         {
             // 處理投票結果
             item.HandleVoteAction();
@@ -27,7 +27,7 @@ namespace ImgurApp.Presenters
             // 發送 API 請求
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
             string voteStr = item.NewVote.ToString().ToLower();
-            context.Album.AlbumImageVoting(item.Data.id, voteStr);
+            context.Album.AlbumImageVoting(item.ItemId, voteStr);
 
             _view.UpdateGalleryItem(item);
         }

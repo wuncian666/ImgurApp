@@ -1,7 +1,7 @@
 ﻿using ImgurAPI.Models;
-using ImgurApp.Components.GalleryItemComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Forms;
+using ImgurApp.Models;
 using ImgurApp.Presenters;
 using System;
 using System.Collections.Generic;
@@ -12,60 +12,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImgurApp.Components.VoteComponent;
 
 namespace ImgurApp.Components
 {
-    public partial class GalleryItemForm : UserControl, IGalleryItemView
+    public partial class GalleryItemForm : UserControl
     {
-        private readonly IGalleryItemPresenter _presenter;
-
-        private readonly GalleryItemModel _item;
+        private readonly GalleryDetailModel _detailModel;
+        private readonly GalleryVoteModel _voteModel;
 
         public GalleryItemForm(GallerySearchModel.Datum item)
         {
             InitializeComponent();
             imgurPicture.LoadAsync($"https://imgur.com/{item.cover}.jpg");
-            this._presenter = new GalleryItemPresenter(this);
 
-            this._item = new GalleryItemModel
+            this._detailModel = new GalleryDetailModel
             {
-                Data = item,
-                Score = item.score,
+                Title = item.title,
+                Account_url = item.account_url,
+                Images = item.images
+            };
+            this._voteModel = new GalleryVoteModel
+            {
+                NewScore = item.score,
+                OldScore = item.score,
                 UpLabelColor = Color.Black,
                 DownLabelColor = Color.Black
             };
 
-            this.InitGalleryItem(item);
-        }
+            var voteConfig = new VoteConfig
+            {
+                Direction = VoteDirection.Horizontal,
+                RefSize = viewsIcon.Size,
+                FrontSize = views.Font,
+                IConSize = viewsIcon.Font
+            };
+            var voteComponent =
+                new ImgurApp.Components.VoteComponent.VoteComponent(_voteModel, voteConfig);
+            this.voteContainer.Controls.Add(voteComponent);
 
-        public void UpdateGalleryItem(GalleryItemModel item)
-        {
-            this.upLabel.ForeColor = item.UpLabelColor;
-            this.downLabel.ForeColor = item.DownLabelColor;
-            score.Text = item.Score.ToString();
+            this.InitGalleryItem(item);
         }
 
         private void InitGalleryItem(GallerySearchModel.Datum item)
         {
             titleLabel.Text = item.title;
-            score.Text = item.score.ToString();
             commentCount.Text = item.comment_count.ToString();
             views.Text = item.views.ToString();
-
-            this.upLabel.Tag = Vote.Up;
-            this.downLabel.Tag = Vote.Down;
-        }
-
-        private void Vote_Click(object sender, EventArgs e)
-        {
-            Label label = (Label)sender;
-            this._item.NewVote = (Vote)label.Tag;
-            this._presenter.AlbumOrImageVoting(this._item);
         }
 
         private void OpenGalleryDetail_Click(object sender, EventArgs e)
         {
-            GalleryDetailForm form = new GalleryDetailForm(this._item);
+            GalleryDetailForm form =
+                new GalleryDetailForm(
+                    this._detailModel,
+                    this._voteModel);
             form.Show();
         }
     }

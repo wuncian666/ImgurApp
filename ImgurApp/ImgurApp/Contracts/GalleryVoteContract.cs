@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ImgurApp.Contracts
 {
-    public interface IGalleryItemPresenter
+    public interface IGalleryVotePresenter
     {
-        void AlbumOrImageVoting(GalleryItemModel item);
+        void AlbumOrImageVoting(GalleryVoteModel item);
     }
 
-    public interface IGalleryItemView
+    public interface IGalleryVoteView
     {
-        void UpdateGalleryItem(GalleryItemModel item);
+        void UpdateGalleryItem(GalleryVoteModel item);
     }
 }

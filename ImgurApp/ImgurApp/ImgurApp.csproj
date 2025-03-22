@@ -73,8 +73,15 @@
     </Compile>
     <Compile Include="Components\PaginationComponent\PaginationContract.cs" />
     <Compile Include="Components\PaginationComponent\PaginationPresenter.cs" />
+    <Compile Include="Components\VoteComponent\VoteComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\VoteComponent\VoteComponent.Designer.cs">
+      <DependentUpon>VoteComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\VoteComponent\VoteConfig.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
-    <Compile Include="Contracts\GalleryItemContract.cs" />
+    <Compile Include="Contracts\GalleryVoteContract.cs" />
     <Compile Include="Forms\GalleryDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +94,8 @@
     <Compile Include="Forms\GalleryForm.Designer.cs">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\GalleryItemModel.cs" />
+    <Compile Include="Models\GalleryDetailModel.cs" />
+    <Compile Include="Models\GalleryVoteModel.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -97,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\PaginationComponent\PaginationComponent.resx">
       <DependentUpon>PaginationComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\VoteComponent\VoteComponent.resx">
+      <DependentUpon>VoteComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GalleryDetailForm.resx">
       <DependentUpon>GalleryDetailForm.cs</DependentUpon>
