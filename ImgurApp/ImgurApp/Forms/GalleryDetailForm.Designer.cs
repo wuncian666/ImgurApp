@@ -34,6 +34,7 @@
             this.loveLabel = new System.Windows.Forms.Label();
             this.commentLabel = new System.Windows.Forms.Label();
             this.voteContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.commentsContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // userNameLabel
@@ -61,7 +62,7 @@
             this.imageContainer.AutoScroll = true;
             this.imageContainer.Location = new System.Drawing.Point(120, 137);
             this.imageContainer.Name = "imageContainer";
-            this.imageContainer.Size = new System.Drawing.Size(658, 541);
+            this.imageContainer.Size = new System.Drawing.Size(425, 541);
             this.imageContainer.TabIndex = 2;
             // 
             // loveLabel
@@ -91,14 +92,23 @@
             this.voteContainer.Size = new System.Drawing.Size(53, 225);
             this.voteContainer.TabIndex = 8;
             // 
+            // commentsContainer
+            // 
+            this.commentsContainer.AutoScroll = true;
+            this.commentsContainer.Location = new System.Drawing.Point(640, 137);
+            this.commentsContainer.Name = "commentsContainer";
+            this.commentsContainer.Size = new System.Drawing.Size(425, 541);
+            this.commentsContainer.TabIndex = 2;
+            // 
             // GalleryDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(827, 717);
+            this.ClientSize = new System.Drawing.Size(1121, 717);
             this.Controls.Add(this.voteContainer);
             this.Controls.Add(this.commentLabel);
             this.Controls.Add(this.loveLabel);
+            this.Controls.Add(this.commentsContainer);
             this.Controls.Add(this.imageContainer);
             this.Controls.Add(this.titleLabel);
             this.Controls.Add(this.userNameLabel);
@@ -117,5 +127,6 @@
         private System.Windows.Forms.Label loveLabel;
         private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.FlowLayoutPanel voteContainer;
+        private System.Windows.Forms.FlowLayoutPanel commentsContainer;
     }
 }

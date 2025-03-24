@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\CommentComponent\CommentComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\CommentComponent\CommentComponent.Designer.cs">
+      <DependentUpon>CommentComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\GalleryItemComponent\GalleryItemForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -80,6 +86,7 @@
       <DependentUpon>VoteComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\VoteComponent\VoteConfig.cs" />
+    <Compile Include="Contracts\CommentContract.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
     <Compile Include="Contracts\GalleryVoteContract.cs" />
     <Compile Include="Forms\GalleryDetailForm.cs">
@@ -96,10 +103,14 @@
     </Compile>
     <Compile Include="Models\GalleryDetailModel.cs" />
     <Compile Include="Models\GalleryVoteModel.cs" />
+    <Compile Include="Presenters\CommentsPresenter.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Components\CommentComponent\CommentComponent.resx">
+      <DependentUpon>CommentComponent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\GalleryItemComponent\GalleryItemForm.resx">
       <DependentUpon>GalleryItemForm.cs</DependentUpon>
     </EmbeddedResource>

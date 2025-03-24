@@ -28,6 +28,7 @@ namespace ImgurApp.Components
 
             this._detailModel = new GalleryDetailModel
             {
+                Id = item.id,
                 Title = item.title,
                 Account_url = item.account_url,
                 Images = item.images

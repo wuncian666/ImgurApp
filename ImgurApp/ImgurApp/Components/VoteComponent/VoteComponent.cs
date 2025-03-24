@@ -51,12 +51,13 @@ namespace ImgurApp.Components.VoteComponent
                 Tag = Vote.Up,
                 Size = config.LabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = _voteModel.UpLabelColor,
             };
 
             this._scoreLabel = new Label
             {
                 Font = config.FrontSize,
-                Text = "0",
+                Text = _voteModel.NewScore.ToString(),
                 Size = config.LabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
             };
@@ -68,6 +69,7 @@ namespace ImgurApp.Components.VoteComponent
                 Tag = Vote.Down,
                 Size = config.LabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
+                ForeColor = _voteModel.DownLabelColor,
             };
 
             this._upLabel.Click += Vote_Click;

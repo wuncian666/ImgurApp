@@ -1,4 +1,5 @@
 ﻿using ImgurAPI.Models;
+using ImgurApp.Components.CommentComponent;
 using ImgurApp.Components.GalleryItemComponent;
 using ImgurApp.Components.VoteComponent;
 using ImgurApp.Contracts;
@@ -16,10 +17,12 @@ using System.Windows.Forms;
 
 namespace ImgurApp.Forms
 {
-    public partial class GalleryDetailForm : Form
+    public partial class GalleryDetailForm : Form, ICommentsView
     {
         private readonly GalleryDetailModel _detailModel;
         private readonly GalleryVoteModel _voteModel;
+
+        private readonly CommentsPresenter _presenter;
 
         public GalleryDetailForm(
             GalleryDetailModel detailModel,
@@ -28,6 +31,9 @@ namespace ImgurApp.Forms
             InitializeComponent();
             this._detailModel = detailModel;
             this._voteModel = voteModel;
+
+            this._presenter = new CommentsPresenter(this);
+            this._presenter.GetCommentsAsync(this._detailModel.Id);
 
             var voteConfig = new VoteConfig
             {
@@ -60,6 +66,15 @@ namespace ImgurApp.Forms
 
         private void commentLabel_Click(object sender, EventArgs e)
         {
+        }
+
+        public void ShowComments(CommentsModel comment)
+        {
+            for (int i = 0; i < comment.data.Length; i++)
+            {
+                this.commentsContainer.Controls.Add(
+                    new CommentComponent(comment.data[i]));
+            }
         }
     }
 }
