@@ -12,6 +12,7 @@ using ImgurAPI.Models;
 using ImgurApp.Presenters;
 using ImgurApp.Components.VoteComponent;
 using ImgurAPI.Comments;
+using System.Text.RegularExpressions;
 
 namespace ImgurApp.Components.CommentComponent
 {
@@ -27,7 +28,7 @@ namespace ImgurApp.Components.CommentComponent
             InitializeComponent();
             this.comment = comment;
             this.UserLabel.Text = comment.author;
-            this.commentLabel.Text = comment.comment;
+            this.SetCommentContent(comment.comment);
 
             this.repliesBtn.Enabled = comment.children.Count() > 0;
 
@@ -35,6 +36,180 @@ namespace ImgurApp.Components.CommentComponent
 
             // 儲存初始高度
             this._initialHeight = this.Height;
+        }
+
+        //private void SetCommentContent(string comment)
+
+        private void SetCommentContent(string comment)
+        {
+            // 清空現有控件
+            this.commentLabel.Controls.Clear();
+            this.commentLabel.Text = "";
+
+            // 創建一個容器來垂直排列多個內容
+            var contentContainer = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.TopDown,
+                AutoSize = true,
+                Width = this.commentLabel.Width,
+                WrapContents = false
+            };
+            this.commentLabel.Controls.Add(contentContainer);
+
+            // 分析評論內容
+            var lines = comment.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            int totalHeight = 0;
+
+            foreach (var line in lines)
+            {
+                var trimmedLine = line.Trim();
+                if (string.IsNullOrEmpty(trimmedLine)) continue;
+
+                // 檢查是否為圖片
+                var imageRegex = new Regex(@"\.(jpeg|jpg|gif|png)$", RegexOptions.IgnoreCase);
+                if (imageRegex.IsMatch(trimmedLine))
+                {
+                    var pictureBox = CreatePictureBox(trimmedLine);
+                    contentContainer.Controls.Add(pictureBox);
+                    totalHeight += pictureBox.Height + 5; // 5 為間距
+                    continue;
+                }
+
+                // 檢查是否為MP4
+                var videoRegex = new Regex(@"\.mp4$", RegexOptions.IgnoreCase);
+                if (videoRegex.IsMatch(trimmedLine))
+                {
+                    var videoLabel = new LinkLabel
+                    {
+                        Text = $"[點擊觀看] {trimmedLine}",
+                        AutoSize = true
+                    };
+                    videoLabel.LinkClicked += (sender, e) => System.Diagnostics.Process.Start(trimmedLine);
+                    contentContainer.Controls.Add(videoLabel);
+                    totalHeight += videoLabel.Height + 5;
+                    continue;
+                }
+
+                // 檢查是否為網址
+                var urlRegex = new Regex(@"^(http|https)://", RegexOptions.IgnoreCase);
+                if (urlRegex.IsMatch(trimmedLine))
+                {
+                    var linkLabel = new LinkLabel
+                    {
+                        Text = trimmedLine,
+                        AutoSize = true
+                    };
+                    linkLabel.LinkClicked += (sender, e) => System.Diagnostics.Process.Start(trimmedLine);
+                    contentContainer.Controls.Add(linkLabel);
+                    totalHeight += linkLabel.Height + 5;
+                    continue;
+                }
+
+                // 普通文字
+                var textLabel = new Label
+                {
+                    Text = trimmedLine,
+                    AutoSize = true,
+                    MaximumSize = new Size(contentContainer.Width - 5, 0)
+                };
+                contentContainer.Controls.Add(textLabel);
+                totalHeight += textLabel.Height + 5;
+            }
+
+            // 如果沒有內容，則顯示原始文字
+            if (contentContainer.Controls.Count == 0)
+            {
+                this.commentLabel.Text = comment;
+                return;
+            }
+
+            // 調整容器高度
+            contentContainer.Height = totalHeight;
+            this.commentLabel.Height = totalHeight;
+
+            // 調整其他控件位置
+            int additionalHeight = totalHeight - 24; // 24是原始commentLabel高度
+            if (additionalHeight > 0)
+            {
+                // 向下移動其他控制項
+                this.voteContainer.Top += additionalHeight;
+                this.repliesBtn.Top += additionalHeight;
+                this.commentContainer.Top += additionalHeight;
+
+                // 增加整個控制項的高度
+                this.Height += additionalHeight;
+
+                // 更新初始高度
+                this._initialHeight = this.Height;
+
+                // 調整父容器的高度
+                if (this.Parent is FlowLayoutPanel parent)
+                {
+                    parent.PerformLayout();
+                }
+            }
+        }
+
+        private PictureBox CreatePictureBox(string imageUrl)
+        {
+            var pictureBox = new PictureBox
+            {
+                ImageLocation = imageUrl,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Width = this.commentLabel.Width - 5,
+                Height = 100 // 初始高度，加載後會調整
+            };
+
+            pictureBox.LoadCompleted += (sender, e) =>
+            {
+                var originalImage = pictureBox.Image;
+                if (originalImage != null)
+                {
+                    // 計算圖片的高度，使其保持原始比例
+                    var aspectRatio = (float)originalImage.Width / originalImage.Height;
+                    pictureBox.Height = (int)(pictureBox.Width / aspectRatio);
+
+                    // 調整容器高度
+                    var container = pictureBox.Parent as FlowLayoutPanel;
+                    if (container != null)
+                    {
+                        container.PerformLayout();
+
+                        // 重新計算總高度
+                        int totalHeight = 0;
+                        foreach (Control control in container.Controls)
+                        {
+                            totalHeight += control.Height + 5;
+                        }
+
+                        container.Height = totalHeight;
+                        this.commentLabel.Height = totalHeight;
+
+                        // 調整其他控件位置
+                        int additionalHeight = totalHeight - 24; // 24是原始commentLabel高度
+                        if (additionalHeight > 0)
+                        {
+                            this.voteContainer.Top = this.commentLabel.Bottom + 5;
+                            this.repliesBtn.Top = this.commentLabel.Bottom + 5;
+                            this.commentContainer.Top = this.voteContainer.Bottom + 5;
+
+                            // 增加整個控制項的高度
+                            this.Height = this.commentContainer.Bottom + 5;
+
+                            // 更新初始高度
+                            this._initialHeight = this.Height;
+
+                            // 調整父容器的高度
+                            if (this.Parent is FlowLayoutPanel parent)
+                            {
+                                parent.PerformLayout();
+                            }
+                        }
+                    }
+                }
+            };
+
+            return pictureBox;
         }
 
         private void InitVoteComponent()

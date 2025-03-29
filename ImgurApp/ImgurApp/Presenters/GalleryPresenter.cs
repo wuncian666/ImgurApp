@@ -20,10 +20,17 @@ namespace ImgurApp.Presenters
 
         public async Task SearchGalleryAsync(GallerySearchParam param)
         {
-            ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
-            GallerySearchModel response =
-                await context.Gallery.GallerySearch(param);
-            this._view.ShowGallery(response);
+            try
+            {
+                ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
+                GallerySearchModel response = await context.Gallery.GallerySearch(param);
+                this._view.ShowGallery(response);
+            }
+            catch (System.IndexOutOfRangeException ex)
+            {
+                // Log the exception or handle it as needed
+                Console.WriteLine($"IndexOutOfRangeException: {ex.Message}");
+            }
         }
     }
 }
