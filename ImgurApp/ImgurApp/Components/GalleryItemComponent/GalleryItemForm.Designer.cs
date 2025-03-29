@@ -41,7 +41,7 @@
             // label4
             // 
             this.label4.Font = new System.Drawing.Font("新細明體", 20F);
-            this.label4.Location = new System.Drawing.Point(196, 260);
+            this.label4.Location = new System.Drawing.Point(247, 307);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 45);
@@ -51,7 +51,7 @@
             // commentCount
             // 
             this.commentCount.AutoSize = true;
-            this.commentCount.Location = new System.Drawing.Point(240, 276);
+            this.commentCount.Location = new System.Drawing.Point(291, 323);
             this.commentCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.commentCount.Name = "commentCount";
             this.commentCount.Size = new System.Drawing.Size(32, 18);
@@ -61,7 +61,7 @@
             // viewsIcon
             // 
             this.viewsIcon.Font = new System.Drawing.Font("新細明體", 20F);
-            this.viewsIcon.Location = new System.Drawing.Point(282, 262);
+            this.viewsIcon.Location = new System.Drawing.Point(333, 309);
             this.viewsIcon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.viewsIcon.Name = "viewsIcon";
             this.viewsIcon.Size = new System.Drawing.Size(45, 45);
@@ -71,7 +71,7 @@
             // views
             // 
             this.views.AutoSize = true;
-            this.views.Location = new System.Drawing.Point(333, 276);
+            this.views.Location = new System.Drawing.Point(384, 323);
             this.views.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.views.Name = "views";
             this.views.Size = new System.Drawing.Size(40, 18);
@@ -83,7 +83,7 @@
             this.imgurPicture.Location = new System.Drawing.Point(0, 0);
             this.imgurPicture.Margin = new System.Windows.Forms.Padding(4);
             this.imgurPicture.Name = "imgurPicture";
-            this.imgurPicture.Size = new System.Drawing.Size(394, 200);
+            this.imgurPicture.Size = new System.Drawing.Size(461, 256);
             this.imgurPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imgurPicture.TabIndex = 7;
             this.imgurPicture.TabStop = false;
@@ -92,7 +92,7 @@
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(20, 218);
+            this.titleLabel.Location = new System.Drawing.Point(20, 274);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(41, 18);
             this.titleLabel.TabIndex = 8;
@@ -101,9 +101,9 @@
             // 
             // voteContainer
             // 
-            this.voteContainer.Location = new System.Drawing.Point(23, 260);
+            this.voteContainer.Location = new System.Drawing.Point(23, 309);
             this.voteContainer.Name = "voteContainer";
-            this.voteContainer.Size = new System.Drawing.Size(136, 45);
+            this.voteContainer.Size = new System.Drawing.Size(200, 50);
             this.voteContainer.TabIndex = 9;
             // 
             // GalleryItemForm
@@ -119,7 +119,7 @@
             this.Controls.Add(this.label4);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "GalleryItemForm";
-            this.Size = new System.Drawing.Size(394, 332);
+            this.Size = new System.Drawing.Size(461, 380);
             this.Click += new System.EventHandler(this.OpenGalleryDetail_Click);
             ((System.ComponentModel.ISupportInitialize)(this.imgurPicture)).EndInit();
             this.ResumeLayout(false);

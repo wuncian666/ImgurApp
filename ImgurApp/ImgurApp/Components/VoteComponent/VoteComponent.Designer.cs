@@ -35,7 +35,7 @@
             // 
             this.voteContainer.Location = new System.Drawing.Point(0, 0);
             this.voteContainer.Name = "voteContainer";
-            this.voteContainer.Size = new System.Drawing.Size(194, 63);
+            this.voteContainer.Size = new System.Drawing.Size(200, 50);
             this.voteContainer.TabIndex = 0;
             // 
             // VoteComponent
@@ -44,7 +44,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.voteContainer);
             this.Name = "VoteComponent";
-            this.Size = new System.Drawing.Size(194, 63);
+            this.Size = new System.Drawing.Size(200, 50);
             this.ResumeLayout(false);
 
         }

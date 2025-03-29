@@ -69,7 +69,7 @@
     <Compile Include="Components\GalleryItemComponent\GalleryItemForm.Designer.cs">
       <DependentUpon>GalleryItemForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\GalleryItemComponent\Vote.cs" />
+    <Compile Include="Components\VoteComponent\Vote.cs" />
     <Compile Include="Components\PaginationComponent\Direction.cs" />
     <Compile Include="Components\PaginationComponent\PaginationComponent.cs">
       <SubType>UserControl</SubType>
@@ -85,10 +85,10 @@
     <Compile Include="Components\VoteComponent\VoteComponent.Designer.cs">
       <DependentUpon>VoteComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\VoteComponent\VoteConfig.cs" />
+    <Compile Include="Components\VoteComponent\VoteComponentConfig.cs" />
     <Compile Include="Contracts\CommentContract.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
-    <Compile Include="Contracts\GalleryVoteContract.cs" />
+    <Compile Include="Contracts\VoteContract.cs" />
     <Compile Include="Forms\GalleryDetailForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,8 +102,9 @@
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\GalleryDetailModel.cs" />
-    <Compile Include="Models\GalleryVoteModel.cs" />
+    <Compile Include="Models\VoteModel.cs" />
     <Compile Include="Presenters\CommentsPresenter.cs" />
+    <Compile Include="Presenters\CommentsVotePresenter.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
     <Compile Include="Program.cs" />

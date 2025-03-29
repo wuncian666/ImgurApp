@@ -19,7 +19,7 @@ namespace ImgurApp.Components
     public partial class GalleryItemForm : UserControl
     {
         private readonly GalleryDetailModel _detailModel;
-        private readonly GalleryVoteModel _voteModel;
+        private readonly VoteModel _voteModel;
 
         public GalleryItemForm(GallerySearchModel.Datum item)
         {
@@ -33,26 +33,31 @@ namespace ImgurApp.Components
                 Account_url = item.account_url,
                 Images = item.images
             };
-            this._voteModel = new GalleryVoteModel
+            this._voteModel = new VoteModel
             {
+                VoteTarget = VoteTarget.AlbumOrImage,
                 NewScore = item.score,
                 OldScore = item.score,
                 UpLabelColor = Color.Black,
                 DownLabelColor = Color.Black
             };
 
-            var voteConfig = new VoteConfig
+            this.InitGalleryItem(item);
+            this.InitVoteComponent();
+        }
+
+        private void InitVoteComponent()
+        {
+            var voteConfig = new VoteComponentConfig
             {
                 Direction = VoteDirection.Horizontal,
-                RefSize = viewsIcon.Size,
-                FrontSize = views.Font,
-                IConSize = viewsIcon.Font
+                RefContainerSize = voteContainer.Size,
+                FontSize = voteContainer.Font
             };
             var voteComponent =
-                new ImgurApp.Components.VoteComponent.VoteComponent(_voteModel, voteConfig);
+                new ImgurApp.Components.VoteComponent.
+                VoteComponent(_voteModel, voteConfig);
             this.voteContainer.Controls.Add(voteComponent);
-
-            this.InitGalleryItem(item);
         }
 
         private void InitGalleryItem(GallerySearchModel.Datum item)

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImgurApp.Components.GalleryItemComponent;
+using ImgurApp.Components.VoteComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Presenters;
 
@@ -19,46 +19,60 @@ namespace ImgurApp.Components.VoteComponent
         Vertical,
     }
 
-    public partial class VoteComponent :
-        UserControl,
-        IGalleryVoteView
+    public enum VoteTarget
     {
-        private readonly IGalleryVotePresenter _presenter;
+        AlbumOrImage,
+        Comment,
+    }
 
-        private readonly GalleryVoteModel _voteModel;
+    public partial class VoteComponent : UserControl, IVoteView
+    {
+        private readonly IVotePresenter _presenter;
 
-        private readonly VoteConfig _config;
+        private readonly VoteModel _voteModel;
+
+        private readonly VoteComponentConfig _config;
 
         private readonly Label _upLabel;
         private readonly Label _downLabel;
         private readonly Label _scoreLabel;
 
-        public VoteComponent(GalleryVoteModel voteModel, VoteConfig config)
+        public VoteComponent(VoteModel voteModel, VoteComponentConfig config)
         {
             InitializeComponent();
 
             this._voteModel = voteModel;
-            this._presenter = new GalleryItemPresenter(this);
+
+            // 設定邊框
+            //this.BorderStyle = BorderStyle.FixedSingle;
+
+            if (voteModel.VoteTarget == VoteTarget.AlbumOrImage)
+            {
+                this._presenter = new GalleryItemPresenter(this);
+            }
+            else if (voteModel.VoteTarget == VoteTarget.Comment)
+            {
+                this._presenter = new CommentsVotePresenter(this);
+            }
 
             this._config = config;
             this.Size = config.ContainerSize;
             this.voteContainer.Size = config.ContainerSize;
-
             this._upLabel = new Label
             {
                 Font = config.IConSize,
                 Text = "⬆",
                 Tag = Vote.Up,
-                Size = config.LabelSize,
+                Size = config.IconLabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = _voteModel.UpLabelColor,
             };
 
             this._scoreLabel = new Label
             {
-                Font = config.FrontSize,
+                Font = config.FontSize,
                 Text = _voteModel.NewScore.ToString(),
-                Size = config.LabelSize,
+                Size = config.ScoreLabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
             };
 
@@ -67,7 +81,7 @@ namespace ImgurApp.Components.VoteComponent
                 Font = config.IConSize,
                 Text = "⬇",
                 Tag = Vote.Down,
-                Size = config.LabelSize,
+                Size = config.IconLabelSize,
                 TextAlign = ContentAlignment.MiddleCenter,
                 ForeColor = _voteModel.DownLabelColor,
             };
@@ -87,18 +101,18 @@ namespace ImgurApp.Components.VoteComponent
             if (this._config.Direction == VoteDirection.Horizontal)
             {
                 _upLabel.Location = new Point(0, 0);
-                _scoreLabel.Location = new Point(this._config.RefSize.Width, 0);
-                _downLabel.Location = new Point(this._config.RefSize.Width * 2, 0);
+                _scoreLabel.Location = new Point(this._config.IconLabelSize.Height, 0);
+                _downLabel.Location = new Point(this._config.IconLabelSize.Height * 3, 0);
             }
             else
             {
                 _upLabel.Location = new Point(0, 0);
-                _scoreLabel.Location = new Point(0, this._config.RefSize.Width);
-                _downLabel.Location = new Point(0, this._config.RefSize.Width * 2);
+                _scoreLabel.Location = new Point(0, this._config.IconLabelSize.Height);
+                _downLabel.Location = new Point(0, this._config.IconLabelSize.Height * 3);
             }
         }
 
-        public void UpdateGalleryItem(GalleryVoteModel item)
+        public void UpdateVoteComponent(VoteModel item)
         {
             this._upLabel.ForeColor = item.UpLabelColor;
             this._downLabel.ForeColor = item.DownLabelColor;
@@ -109,7 +123,7 @@ namespace ImgurApp.Components.VoteComponent
         {
             Label label = (Label)sender;
             this._voteModel.NewVote = (Vote)label.Tag;
-            this._presenter.AlbumOrImageVoting(this._voteModel);
+            this._presenter.Voting(this._voteModel);
         }
     }
 }

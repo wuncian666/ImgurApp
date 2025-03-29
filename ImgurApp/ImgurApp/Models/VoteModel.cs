@@ -1,5 +1,5 @@
 ﻿using ImgurAPI.Models;
-using ImgurApp.Components.GalleryItemComponent;
+using ImgurApp.Components.VoteComponent;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace ImgurApp
 {
-    public class GalleryVoteModel
+    public class VoteModel
     {
         //public GallerySearchModel.Datum Data { get; set; }
+        public VoteTarget VoteTarget { get; set; }
 
         public string ItemId { get; set; }
 

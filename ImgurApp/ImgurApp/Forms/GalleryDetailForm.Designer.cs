@@ -62,49 +62,53 @@
             this.imageContainer.AutoScroll = true;
             this.imageContainer.Location = new System.Drawing.Point(120, 137);
             this.imageContainer.Name = "imageContainer";
-            this.imageContainer.Size = new System.Drawing.Size(425, 541);
+            this.imageContainer.Size = new System.Drawing.Size(539, 541);
             this.imageContainer.TabIndex = 2;
             // 
             // loveLabel
             // 
             this.loveLabel.Font = new System.Drawing.Font("新細明體", 20F);
-            this.loveLabel.Location = new System.Drawing.Point(37, 419);
+            this.loveLabel.Location = new System.Drawing.Point(37, 570);
             this.loveLabel.Name = "loveLabel";
-            this.loveLabel.Size = new System.Drawing.Size(30, 32);
+            this.loveLabel.Size = new System.Drawing.Size(48, 48);
             this.loveLabel.TabIndex = 6;
             this.loveLabel.Text = "♡";
+            this.loveLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // commentLabel
             // 
             this.commentLabel.Font = new System.Drawing.Font("新細明體", 20F);
-            this.commentLabel.Location = new System.Drawing.Point(37, 515);
+            this.commentLabel.Location = new System.Drawing.Point(37, 630);
             this.commentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.commentLabel.Name = "commentLabel";
             this.commentLabel.Size = new System.Drawing.Size(48, 48);
             this.commentLabel.TabIndex = 7;
             this.commentLabel.Text = "💬";
-            this.commentLabel.Click += new System.EventHandler(this.commentLabel_Click);
+            this.commentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // voteContainer
             // 
+            this.voteContainer.AutoScroll = true;
+            this.voteContainer.Font = new System.Drawing.Font("新細明體", 9F);
             this.voteContainer.Location = new System.Drawing.Point(44, 137);
             this.voteContainer.Name = "voteContainer";
-            this.voteContainer.Size = new System.Drawing.Size(53, 225);
+            this.voteContainer.Size = new System.Drawing.Size(50, 400);
             this.voteContainer.TabIndex = 8;
             // 
             // commentsContainer
             // 
             this.commentsContainer.AutoScroll = true;
-            this.commentsContainer.Location = new System.Drawing.Point(640, 137);
+            this.commentsContainer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.commentsContainer.Location = new System.Drawing.Point(742, 0);
             this.commentsContainer.Name = "commentsContainer";
-            this.commentsContainer.Size = new System.Drawing.Size(425, 541);
+            this.commentsContainer.Size = new System.Drawing.Size(550, 715);
             this.commentsContainer.TabIndex = 2;
             // 
             // GalleryDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1121, 717);
+            this.ClientSize = new System.Drawing.Size(1292, 715);
             this.Controls.Add(this.voteContainer);
             this.Controls.Add(this.commentLabel);
             this.Controls.Add(this.loveLabel);

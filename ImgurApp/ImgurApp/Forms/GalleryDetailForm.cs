@@ -1,10 +1,10 @@
 ﻿using ImgurAPI.Models;
 using ImgurApp.Components.CommentComponent;
-using ImgurApp.Components.GalleryItemComponent;
 using ImgurApp.Components.VoteComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Models;
 using ImgurApp.Presenters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,32 +20,54 @@ namespace ImgurApp.Forms
     public partial class GalleryDetailForm : Form, ICommentsView
     {
         private readonly GalleryDetailModel _detailModel;
-        private readonly GalleryVoteModel _voteModel;
+        private readonly VoteModel _voteModel;
 
         private readonly CommentsPresenter _presenter;
 
         public GalleryDetailForm(
             GalleryDetailModel detailModel,
-            GalleryVoteModel voteModel)
+            VoteModel voteModel)
         {
             InitializeComponent();
             this._detailModel = detailModel;
             this._voteModel = voteModel;
 
             this._presenter = new CommentsPresenter(this);
-            this._presenter.GetCommentsAsync(this._detailModel.Id);
-
-            var voteConfig = new VoteConfig
-            {
-                Direction = VoteDirection.Vertical,
-                RefSize = commentLabel.Size,
-                FrontSize = commentLabel.Font,
-                IConSize = commentLabel.Font
-            };
-            var voteComponent = new VoteComponent(voteModel, voteConfig);
-            this.voteContainer.Controls.Add(voteComponent);
+            _ = this.LoadCommentsAsync();
 
             this.InitGalleryDetailForm();
+            this.InitVoteComponent();
+        }
+
+        private void InitVoteComponent()
+        {
+            var voteConfig = new VoteComponentConfig
+            {
+                Direction = VoteDirection.Vertical,
+                RefContainerSize = voteContainer.Size,
+                FontSize = voteContainer.Font
+            };
+            var voteComponent =
+                new ImgurApp.Components.VoteComponent.
+                VoteComponent(_voteModel, voteConfig);
+            this.voteContainer.Controls.Add(voteComponent);
+        }
+
+        private async Task LoadCommentsAsync()
+        {
+            Console.WriteLine($"{this._detailModel.Id}");
+            try
+            {
+                await this._presenter.GetCommentsAsync(this._detailModel.Id);
+            }
+            catch (JsonReaderException ex)
+            {
+                Console.WriteLine($"JSON Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
 
         private void InitGalleryDetailForm()
@@ -62,10 +84,6 @@ namespace ImgurApp.Forms
                 picture.LoadAsync($"https://imgur.com/{image.id}.jpg");
                 imageContainer.Controls.Add(picture);
             }
-        }
-
-        private void commentLabel_Click(object sender, EventArgs e)
-        {
         }
 
         public void ShowComments(CommentsModel comment)
