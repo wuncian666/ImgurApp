@@ -30,15 +30,15 @@
         {
             this.voteContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.UserLabel = new System.Windows.Forms.Label();
-            this.commentLabel = new System.Windows.Forms.Label();
             this.repliesBtn = new System.Windows.Forms.Button();
             this.commentContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.contentContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // voteContainer
             // 
             this.voteContainer.Font = new System.Drawing.Font("新細明體", 12F);
-            this.voteContainer.Location = new System.Drawing.Point(21, 91);
+            this.voteContainer.Location = new System.Drawing.Point(22, 92);
             this.voteContainer.Name = "voteContainer";
             this.voteContainer.Size = new System.Drawing.Size(363, 57);
             this.voteContainer.TabIndex = 0;
@@ -52,15 +52,6 @@
             this.UserLabel.Size = new System.Drawing.Size(64, 24);
             this.UserLabel.TabIndex = 1;
             this.UserLabel.Text = "Name";
-            // 
-            // commentLabel
-            // 
-            this.commentLabel.Font = new System.Drawing.Font("新細明體", 12F);
-            this.commentLabel.Location = new System.Drawing.Point(17, 49);
-            this.commentLabel.Name = "commentLabel";
-            this.commentLabel.Size = new System.Drawing.Size(500, 24);
-            this.commentLabel.TabIndex = 2;
-            this.commentLabel.Text = "Comment";
             // 
             // repliesBtn
             // 
@@ -81,17 +72,24 @@
             this.commentContainer.Size = new System.Drawing.Size(520, 10);
             this.commentContainer.TabIndex = 4;
             // 
+            // contentContainer
+            // 
+            this.contentContainer.Location = new System.Drawing.Point(22, 52);
+            this.contentContainer.Name = "contentContainer";
+            this.contentContainer.Size = new System.Drawing.Size(496, 33);
+            this.contentContainer.TabIndex = 5;
+            // 
             // CommentComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.contentContainer);
             this.Controls.Add(this.commentContainer);
             this.Controls.Add(this.repliesBtn);
-            this.Controls.Add(this.commentLabel);
             this.Controls.Add(this.UserLabel);
             this.Controls.Add(this.voteContainer);
             this.Name = "CommentComponent";
-            this.Size = new System.Drawing.Size(520, 165);
+            this.Size = new System.Drawing.Size(524, 165);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,8 +99,8 @@
 
         private System.Windows.Forms.FlowLayoutPanel voteContainer;
         private System.Windows.Forms.Label UserLabel;
-        private System.Windows.Forms.Label commentLabel;
         private System.Windows.Forms.Button repliesBtn;
         private System.Windows.Forms.FlowLayoutPanel commentContainer;
+        private System.Windows.Forms.FlowLayoutPanel contentContainer;
     }
 }

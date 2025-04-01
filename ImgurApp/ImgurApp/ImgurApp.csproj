@@ -57,6 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentContentTypes\CommentContentPicture.cs" />
+    <Compile Include="CommentContentTypes\CommentContentText.cs" />
+    <Compile Include="CommentContentTypes\CommentContentType.cs" />
+    <Compile Include="CommentContentTypes\CommentContentTypeEnum.cs" />
+    <Compile Include="CommentContentTypes\CommentContentTypeFactory.cs" />
+    <Compile Include="CommentContentTypes\CommentContentUrl.cs" />
+    <Compile Include="CommentContentTypes\CommentContentVideo.cs" />
     <Compile Include="Components\CommentComponent\CommentComponent.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,6 +93,7 @@
       <DependentUpon>VoteComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\VoteComponent\VoteComponentConfig.cs" />
+    <Compile Include="Contracts\CommentContentContract.cs" />
     <Compile Include="Contracts\CommentContract.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
     <Compile Include="Contracts\VoteContract.cs" />
@@ -103,6 +111,7 @@
     </Compile>
     <Compile Include="Models\GalleryDetailModel.cs" />
     <Compile Include="Models\VoteModel.cs" />
+    <Compile Include="Presenters\CommentContentPresenter.cs" />
     <Compile Include="Presenters\CommentsPresenter.cs" />
     <Compile Include="Presenters\CommentsVotePresenter.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
