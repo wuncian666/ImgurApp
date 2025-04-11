@@ -9,10 +9,6 @@ namespace ImgurApp.CommentContentTypes
 {
     internal class CommentContentTypeFactory
     {
-        public CommentContentTypeFactory()
-        {
-        }
-
         public static CommentContentType CreateCommentControl(CommentContentTypeEnum type)
         {
             CommentContentType contentType = null;
