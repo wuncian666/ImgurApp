@@ -1,10 +1,12 @@
-﻿using ImgurApp.CommentContentTypes;
+﻿using ImgurAPI.Comments;
+using ImgurApp.CommentContentTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using static ImgurApp.Contracts.CommentContentContract;
 
 namespace ImgurApp.Presenters
@@ -21,19 +23,37 @@ namespace ImgurApp.Presenters
             this._view = view;
         }
 
-        public void AnalyzeComment(string content)
+        public void AnalyzeComment(string comment)
+        {
+            var lines = comment.Split(
+                new[] { "\n", "\r", "\r\n", " " },
+                StringSplitOptions.None);
+
+            FlowLayoutPanel container = new FlowLayoutPanel();
+            foreach (var line in lines)
+            {
+                var trimmedLine = line.Trim();
+                if (string.IsNullOrEmpty(trimmedLine)) continue;
+                var control = AnalyzeContent(line);
+                container.Controls.Add(control);
+            }
+
+            this._view.AddCommentPanelToContainer(container);
+        }
+
+        private Control AnalyzeContent(string line)
         {
             CommentContentTypeEnum contentType;
 
-            if (_imageRegex.IsMatch(content))
+            if (_imageRegex.IsMatch(line))
             {
                 contentType = CommentContentTypeEnum.Picture;
             }
-            else if (_videoRegex.IsMatch(content))
+            else if (_videoRegex.IsMatch(line))
             {
                 contentType = CommentContentTypeEnum.Video;
             }
-            else if (_urlRegex.IsMatch(content))
+            else if (_urlRegex.IsMatch(line))
             {
                 contentType = CommentContentTypeEnum.Url;
             }
@@ -43,8 +63,7 @@ namespace ImgurApp.Presenters
             }
 
             CommentContentType commentType = CommentContentTypeFactory.CreateCommentControl(contentType);
-            var control = commentType.GetControl(content);
-            this._view.AddCommentControl(control);
+            return commentType.GetControl(line);
         }
     }
 }
