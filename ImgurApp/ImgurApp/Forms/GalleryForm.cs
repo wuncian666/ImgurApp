@@ -2,6 +2,7 @@
 using ImgurAPI.Models.Params;
 using ImgurApp.Components;
 using ImgurApp.Contracts;
+using ImgurApp.Models;
 using ImgurApp.Presenters;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace ImgurApp
         {
             InitializeComponent();
 
+            _ = this.GetAccountAsync();
+
             this.sortComboBox.DataSource =
                 new string[] { "viral", "top", "time", "rising" };
             this.windowComboBox.DataSource =
@@ -35,6 +38,13 @@ namespace ImgurApp
 
             this.pagination1.ItemPrePages = 4;
             this.pagination1.PageNumberChange += PageNumberChange;
+        }
+
+        private async Task GetAccountAsync()
+        {
+            ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
+            AccountSettingModel models = await context.Account.GetAccountSettings();
+            AccountModel.Account_url = models.data.account_url;
         }
 
         private void PageNumberChange(object sender, int e)
