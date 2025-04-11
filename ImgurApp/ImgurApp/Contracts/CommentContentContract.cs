@@ -16,7 +16,7 @@ namespace ImgurApp.Contracts
 
         public interface ICommentContentView
         {
-            void AddCommentControl(Control control);
+            void AddCommentPanelToContainer(Control control);
         }
     }
 }

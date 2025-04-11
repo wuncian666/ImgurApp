@@ -33,6 +33,7 @@
             this.repliesBtn = new System.Windows.Forms.Button();
             this.commentContainer = new System.Windows.Forms.FlowLayoutPanel();
             this.contentContainer = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnRepliesComment = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // voteContainer
@@ -79,10 +80,21 @@
             this.contentContainer.Size = new System.Drawing.Size(496, 33);
             this.contentContainer.TabIndex = 5;
             // 
+            // btnRepliesComment
+            // 
+            this.btnRepliesComment.Location = new System.Drawing.Point(361, 12);
+            this.btnRepliesComment.Name = "btnRepliesComment";
+            this.btnRepliesComment.Size = new System.Drawing.Size(156, 30);
+            this.btnRepliesComment.TabIndex = 6;
+            this.btnRepliesComment.Text = "repliesComment";
+            this.btnRepliesComment.UseVisualStyleBackColor = true;
+            this.btnRepliesComment.Click += new System.EventHandler(this.BtnReplyComment_Click);
+            // 
             // CommentComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRepliesComment);
             this.Controls.Add(this.contentContainer);
             this.Controls.Add(this.commentContainer);
             this.Controls.Add(this.repliesBtn);
@@ -102,5 +114,6 @@
         private System.Windows.Forms.Button repliesBtn;
         private System.Windows.Forms.FlowLayoutPanel commentContainer;
         private System.Windows.Forms.FlowLayoutPanel contentContainer;
+        private System.Windows.Forms.Button btnRepliesComment;
     }
 }

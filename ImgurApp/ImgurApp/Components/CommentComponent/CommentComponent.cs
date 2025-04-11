@@ -14,56 +14,67 @@ using ImgurApp.Components.VoteComponent;
 using ImgurAPI.Comments;
 using System.Text.RegularExpressions;
 using static ImgurApp.Contracts.CommentContentContract;
+using System.Xml.Linq;
 
 namespace ImgurApp.Components.CommentComponent
 {
-    public partial class CommentComponent :
-            UserControl, ICommentContentView
+    public partial class CommentComponent : UserControl, ICommentContentView
     {
-        private readonly CommentsModel.Datum comment;
+        public string CommentId => _comment.id.ToString();
+
+        private readonly ICommentContentPresenter _commentContentPresenter;
+
+        private readonly CommentsModel.Datum _comment;
         private VoteModel _voteModel;
-        private ICommentContentPresenter _presenter;
-        private int _initialHeight; // 儲存元件的初始高度
+
+        private int _initialHeight;
+        private int _maxHeight = 0;
+        private bool _isRepliesShowed = false;
+        private const int REPLY_PADDING = 5;
 
         public CommentComponent(CommentsModel.Datum comment)
         {
             InitializeComponent();
-            this._presenter = new CommentContentPresenter(this);
-            this.comment = comment;
-            this.UserLabel.Text = comment.author;
-            this.SetCommentContent(comment.comment);
+            this._comment = comment;
+            this._commentContentPresenter = new CommentContentPresenter(this);
 
-            this.repliesBtn.Enabled = comment.children.Count() > 0;
-
+            this.InitCommentComponent();
             this.InitVoteComponent();
-
-            // 儲存初始高度
-            this._initialHeight = this.Height;
         }
 
-        private void SetCommentContent(string comment)
+        private void RenderCommentToContainer(string comment)
         {
-            // 分析評論內容
-            var lines = comment.Split(
-                new[] { '\n', '\r' },
-                StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var line in lines)
-            {
-                var trimmedLine = line.Trim();
-                if (string.IsNullOrEmpty(trimmedLine)) continue;
-
-                this._presenter.AnalyzeComment(trimmedLine);
-            }
+            this._commentContentPresenter.AnalyzeComment(comment);
         }
 
-        public void AddCommentControl(Control control)
+        public void AddCommentPanelToContainer(Control control)
         {
-            if (control != null)
+            if (control == null) return;
+
+            this.contentContainer.Controls.Add(control);
+            AdjustContainerHeight(control.Height + 5);
+        }
+
+        public void AddReplyComment(CommentsModel.Datum comment)
+        {
+            if (_comment.children == null)
             {
-                this.contentContainer.Controls.Add(control);
-                AdjustContainerHeight(control.Height + 5);
+                _comment.children = new CommentsModel.Datum[] { comment };
             }
+            else
+            {
+                var children = _comment.children.ToList();
+                children.Add(comment);
+                _comment.children = children.ToArray();
+            }
+
+            this.ShowReplies();
+        }
+
+        public void EnableReplyBtn()
+        {
+            this.repliesBtn.Enabled = true;
+            this._isRepliesShowed = true;
         }
 
         private void AdjustContainerHeight(int additionalHeight)
@@ -92,14 +103,23 @@ namespace ImgurApp.Components.CommentComponent
             }
         }
 
+        private void InitCommentComponent()
+        {
+            this.BorderStyle = BorderStyle.FixedSingle;
+            this.UserLabel.Text = this._comment.author;
+            this.repliesBtn.Enabled = this._comment.children?.Count() > 0;
+            this._initialHeight = this.Height;
+            this.RenderCommentToContainer(this._comment.comment);
+        }
+
         private void InitVoteComponent()
         {
             this._voteModel = new VoteModel
             {
                 VoteTarget = VoteTarget.Comment,
-                ItemId = comment.id.ToString(),
-                NewScore = comment.points,
-                OldScore = comment.points,
+                ItemId = _comment.id.ToString(),
+                NewScore = _comment.points,
+                OldScore = _comment.points,
                 UpLabelColor = Color.Black,
                 DownLabelColor = Color.Black
             };
@@ -110,20 +130,14 @@ namespace ImgurApp.Components.CommentComponent
                 RefContainerSize = this.voteContainer.Size,
                 FontSize = this.voteContainer.Font
             };
-            var voteComponent = new ImgurApp.Components.VoteComponent.
-                VoteComponent(this._voteModel, voteComponentConfig);
+            var voteComponent = new VoteComponent.VoteComponent(this._voteModel, voteComponentConfig);
             this.voteContainer.Controls.Add(voteComponent);
         }
 
         private void RepliesBtn_Click(object sender, EventArgs e)
         {
-            // 切換回覆顯示狀態
-            ToggleRepliesVisibility();
+            this.ToggleRepliesVisibility();
         }
-
-        private int _maxHeight = 0;
-        private bool _isRepliesShowed = false;
-        private const int REPLY_PADDING = 5;
 
         /// <summary>
         /// 切換回覆顯示/隱藏狀態
@@ -167,20 +181,16 @@ namespace ImgurApp.Components.CommentComponent
             this.commentContainer.Controls.Clear();
             this.commentContainer.Size = new Size(commentContainer.Width, 10);
 
-            int totalHeight = LoadReplyComponents();
+            int totalHeight = this.LoadReplyComponents();
 
-            // 保存總高度以便關閉時使用
-            this._maxHeight = totalHeight;
+            this._maxHeight = totalHeight;// 保存總高度以便關閉時使用
 
-            // 調整容器高度
             this.commentContainer.Size = new Size(commentContainer.Width, totalHeight);
 
-            // 調整當前元件高度
             int originalHeight = this.Height;
             this.Height = Math.Max(originalHeight, _initialHeight + totalHeight);
 
-            // 調整父容器高度
-            AdjustParentHeights(totalHeight);
+            this.AdjustParentHeights(totalHeight);
         }
 
         /// <summary>
@@ -191,15 +201,13 @@ namespace ImgurApp.Components.CommentComponent
         {
             int totalHeight = 0;
 
-            // 創建交替顏色
             Color bgColor = this.BackColor == Color.White ? Color.WhiteSmoke : Color.White;
 
-            foreach (var reply in comment.children)
+            foreach (var reply in _comment.children)
             {
                 var replyComponent = CreateReplyComponent(reply, bgColor);
                 this.commentContainer.Controls.Add(replyComponent);
 
-                // 累加高度
                 totalHeight += replyComponent.Height + REPLY_PADDING;
             }
 
@@ -211,11 +219,13 @@ namespace ImgurApp.Components.CommentComponent
         /// </summary>
         private CommentComponent CreateReplyComponent(CommentsModel.Datum reply, Color bgColor)
         {
-            return new CommentComponent(reply)
+            var newComponent = new CommentComponent(reply)
             {
                 BackColor = bgColor,
                 Width = this.commentContainer.Width - 10
             };
+
+            return newComponent;
         }
 
         /// <summary>
@@ -234,6 +244,11 @@ namespace ImgurApp.Components.CommentComponent
             {
                 grandparent.Height += heightDelta;
             }
+        }
+
+        private void BtnReplyComment_Click(object sender, EventArgs e)
+        {
+            CommentEvents.OnReplyButtonClicked(this);
         }
     }
 }

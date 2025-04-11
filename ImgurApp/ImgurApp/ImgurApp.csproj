@@ -70,6 +70,7 @@
     <Compile Include="Components\CommentComponent\CommentComponent.Designer.cs">
       <DependentUpon>CommentComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\CommentComponent\CommentComponentEvent.cs" />
     <Compile Include="Components\GalleryItemComponent\GalleryItemForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,6 +97,7 @@
     <Compile Include="Contracts\CommentContentContract.cs" />
     <Compile Include="Contracts\CommentContract.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
+    <Compile Include="Contracts\UploadImageContract.cs" />
     <Compile Include="Contracts\VoteContract.cs" />
     <Compile Include="Forms\GalleryDetailForm.cs">
       <SubType>Form</SubType>
@@ -109,6 +111,7 @@
     <Compile Include="Forms\GalleryForm.Designer.cs">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\GalleryDetailModel.cs" />
     <Compile Include="Models\VoteModel.cs" />
     <Compile Include="Presenters\CommentContentPresenter.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="Presenters\CommentsVotePresenter.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
+    <Compile Include="Presenters\ImageUploadPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Components\CommentComponent\CommentComponent.resx">
