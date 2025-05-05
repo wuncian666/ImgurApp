@@ -1,11 +1,6 @@
-﻿using ImgurAPI.Comments;
-using ImgurApp.CommentContentTypes;
+﻿using ImgurApp.CommentContentTypes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ImgurApp.Contracts.CommentContentContract;
 

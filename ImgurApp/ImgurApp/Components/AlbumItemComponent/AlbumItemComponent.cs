@@ -1,33 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ImgurAPI.Models;
-using ImgurApp.Components.VoteComponent;
-using ImgurApp.Contracts;
-using ImgurApp.Presenters;
-using ImgurApp.Models;
+﻿using ImgurApp.Components.VoteComponent;
 using ImgurApp.Forms;
+using ImgurApp.Models;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace ImgurApp.Components.ImageItemComponent
 {
     public partial class AlbumItemComponent : UserControl
     {
-        private VoteModel _voteModel;
+        private readonly VoteModel _voteModel;
 
-        private AlbumsModelWithVote _albumModelWithVote;
+        private readonly AlbumsModelWithVote _albumModelWithVote;
 
         public AlbumItemComponent(AlbumsModelWithVote response)
         {
             InitializeComponent();
 
-            Console.WriteLine($"https://i.imgur.com/{response.cover}.jpeg");
             this._albumModelWithVote = response;
+
             this.pictureBox1.LoadAsync($"https://i.imgur.com/{response.cover}.jpeg");
             this.titleLabel.Text = response.title;
             this.views.Text = response.views.ToString();

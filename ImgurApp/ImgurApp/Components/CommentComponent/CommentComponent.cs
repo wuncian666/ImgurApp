@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using ImgurApp.Contracts;
-using ImgurAPI.Models;
-using ImgurApp.Presenters;
+﻿using ImgurAPI.Models;
 using ImgurApp.Components.VoteComponent;
-using ImgurAPI.Comments;
-using System.Text.RegularExpressions;
+using ImgurApp.Presenters;
+using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 using static ImgurApp.Contracts.CommentContentContract;
-using System.Xml.Linq;
 
 namespace ImgurApp.Components.CommentComponent
 {

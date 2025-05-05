@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace ImgurApp.Components.VoteComponent
 {
@@ -19,8 +13,6 @@ namespace ImgurApp.Components.VoteComponent
 
         public VoteDirection Direction { get; set; }
 
-        private Size _refContainerSize;
-
         public Size RefContainerSize
         {
             set
@@ -34,7 +26,6 @@ namespace ImgurApp.Components.VoteComponent
                     this._iconSideLength = value.Width;
                 }
                 this._refContainer = value;
-                this._refContainerSize = value;
             }
         }
 

@@ -5,14 +5,8 @@ using ImgurApp.Components.VoteComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Models;
 using ImgurApp.Presenters;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 

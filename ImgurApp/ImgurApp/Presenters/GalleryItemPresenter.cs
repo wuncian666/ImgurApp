@@ -1,12 +1,4 @@
-﻿using ImgurAPI.Models;
-using ImgurApp.Components.VoteComponent;
-using ImgurApp.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ImgurApp.Contracts;
 
 namespace ImgurApp.Presenters
 {

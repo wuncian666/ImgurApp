@@ -1,17 +1,9 @@
-﻿using ImgurAPI.Albums;
-using ImgurAPI.Models;
+﻿using ImgurAPI.Models;
 using ImgurApp.Components.ImageItemComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Presenters;
 using ImgurApp.Utils;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImgurApp.Forms
