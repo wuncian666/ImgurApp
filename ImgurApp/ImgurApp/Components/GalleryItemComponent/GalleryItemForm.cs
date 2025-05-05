@@ -31,7 +31,8 @@ namespace ImgurApp.Components
                 Id = item.id,
                 Title = item.title,
                 Account_url = item.account_url,
-                Images = item.images
+                Images = item.images,
+                Favorite = item.favorite,
             };
             this._voteModel = new VoteModel
             {
@@ -55,8 +56,7 @@ namespace ImgurApp.Components
                 FontSize = voteContainer.Font
             };
             var voteComponent =
-                new ImgurApp.Components.VoteComponent.
-                VoteComponent(_voteModel, voteConfig);
+                new VoteComponent.VoteComponent(_voteModel, voteConfig);
             this.voteContainer.Controls.Add(voteComponent);
         }
 

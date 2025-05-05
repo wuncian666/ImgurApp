@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.queryTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,14 +40,18 @@
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pageLabel = new System.Windows.Forms.Label();
             this.searchPanel = new System.Windows.Forms.Panel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.相簿ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.相片上傳ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pagination1 = new ImgurApp.Components.PaginationComponent.PaginationComponent();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.searchPanel.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(955, 12);
+            this.button1.Location = new System.Drawing.Point(956, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(153, 57);
             this.button1.TabIndex = 0;
@@ -75,7 +80,7 @@
             // galleryContainer
             // 
             this.galleryContainer.AutoScroll = true;
-            this.galleryContainer.Location = new System.Drawing.Point(19, 126);
+            this.galleryContainer.Location = new System.Drawing.Point(68, 157);
             this.galleryContainer.Margin = new System.Windows.Forms.Padding(4);
             this.galleryContainer.Name = "galleryContainer";
             this.galleryContainer.Size = new System.Drawing.Size(1089, 538);
@@ -84,7 +89,7 @@
             // sortComboBox
             // 
             this.sortComboBox.FormattingEnabled = true;
-            this.sortComboBox.Location = new System.Drawing.Point(382, 31);
+            this.sortComboBox.Location = new System.Drawing.Point(382, 32);
             this.sortComboBox.Name = "sortComboBox";
             this.sortComboBox.Size = new System.Drawing.Size(121, 26);
             this.sortComboBox.TabIndex = 4;
@@ -92,7 +97,7 @@
             // sortLabel
             // 
             this.sortLabel.AutoSize = true;
-            this.sortLabel.Location = new System.Drawing.Point(317, 39);
+            this.sortLabel.Location = new System.Drawing.Point(316, 39);
             this.sortLabel.Name = "sortLabel";
             this.sortLabel.Size = new System.Drawing.Size(44, 18);
             this.sortLabel.TabIndex = 5;
@@ -101,7 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(509, 39);
+            this.label2.Location = new System.Drawing.Point(508, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 18);
             this.label2.TabIndex = 6;
@@ -110,7 +115,7 @@
             // windowComboBox
             // 
             this.windowComboBox.FormattingEnabled = true;
-            this.windowComboBox.Location = new System.Drawing.Point(595, 31);
+            this.windowComboBox.Location = new System.Drawing.Point(596, 32);
             this.windowComboBox.Name = "windowComboBox";
             this.windowComboBox.Size = new System.Drawing.Size(121, 26);
             this.windowComboBox.TabIndex = 7;
@@ -125,7 +130,7 @@
             // pageLabel
             // 
             this.pageLabel.AutoSize = true;
-            this.pageLabel.Location = new System.Drawing.Point(739, 39);
+            this.pageLabel.Location = new System.Drawing.Point(740, 39);
             this.pageLabel.Name = "pageLabel";
             this.pageLabel.Size = new System.Drawing.Size(44, 18);
             this.pageLabel.TabIndex = 9;
@@ -145,21 +150,47 @@
             this.searchPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.searchPanel.Location = new System.Drawing.Point(0, 0);
             this.searchPanel.Name = "searchPanel";
-            this.searchPanel.Size = new System.Drawing.Size(1221, 100);
+            this.searchPanel.Size = new System.Drawing.Size(1258, 100);
             this.searchPanel.TabIndex = 0;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.相簿ToolStripMenuItem,
+            this.相片上傳ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 64);
+            // 
+            // 相簿ToolStripMenuItem
+            // 
+            this.相簿ToolStripMenuItem.Name = "相簿ToolStripMenuItem";
+            this.相簿ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.相簿ToolStripMenuItem.Text = "相簿";
+            this.相簿ToolStripMenuItem.Click += new System.EventHandler(this.相簿ToolStripMenuItem_Click);
+            // 
+            // 相片上傳ToolStripMenuItem
+            // 
+            this.相片上傳ToolStripMenuItem.Name = "相片上傳ToolStripMenuItem";
+            this.相片上傳ToolStripMenuItem.Size = new System.Drawing.Size(152, 30);
+            this.相片上傳ToolStripMenuItem.Text = "相片上傳";
+            this.相片上傳ToolStripMenuItem.Click += new System.EventHandler(this.相片上傳ToolStripMenuItem_Click);
             // 
             // pagination1
             // 
-            this.pagination1.Location = new System.Drawing.Point(175, 709);
+            this.pagination1.ItemPrePages = 0;
+            this.pagination1.Location = new System.Drawing.Point(176, 710);
+            this.pagination1.Margin = new System.Windows.Forms.Padding(2);
             this.pagination1.Name = "pagination1";
-            this.pagination1.Size = new System.Drawing.Size(933, 83);
+            this.pagination1.Size = new System.Drawing.Size(933, 82);
             this.pagination1.TabIndex = 4;
             // 
             // GalleryForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1221, 804);
+            this.ClientSize = new System.Drawing.Size(1258, 744);
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.pagination1);
             this.Controls.Add(this.galleryContainer);
             this.Controls.Add(this.searchPanel);
@@ -168,6 +199,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.searchPanel.ResumeLayout(false);
             this.searchPanel.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,6 +218,9 @@
         private System.Windows.Forms.Label pageLabel;
         private System.Windows.Forms.Panel searchPanel;
         private Components.PaginationComponent.PaginationComponent pagination1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 相簿ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 相片上傳ToolStripMenuItem;
     }
 }
 

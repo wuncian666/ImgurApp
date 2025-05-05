@@ -22,7 +22,7 @@ namespace ImgurApp.Presenters
         {
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
             ImageUploadModel response = await context.Image.UploadImage(uploadParam);
-            this._view.AddImageLinkToTextBox(response);
+            this._view.GetImageUploadResponse(response);
         }
     }
 }

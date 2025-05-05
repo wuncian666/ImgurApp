@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="HttpUtils">
       <HintPath>..\..\..\ImgurAPI\ImgurAPI\bin\Debug\HttpUtils.dll</HintPath>
     </Reference>
@@ -77,6 +80,18 @@
     <Compile Include="Components\GalleryItemComponent\GalleryItemForm.Designer.cs">
       <DependentUpon>GalleryItemForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\AlbumItemComponent\AlbumItemComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\AlbumItemComponent\AlbumItemComponent.Designer.cs">
+      <DependentUpon>AlbumItemComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\ImageItemComponent\ImageItemComponent.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\ImageItemComponent\ImageItemComponent.Designer.cs">
+      <DependentUpon>ImageItemComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\VoteComponent\Vote.cs" />
     <Compile Include="Components\PaginationComponent\Direction.cs" />
     <Compile Include="Components\PaginationComponent\PaginationComponent.cs">
@@ -94,9 +109,15 @@
       <DependentUpon>VoteComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\VoteComponent\VoteComponentConfig.cs" />
+    <Compile Include="Contracts\AccountImagesContract.cs" />
+    <Compile Include="Contracts\AlbumFavoriteContract.cs" />
+    <Compile Include="Contracts\AlbumImagesContract.cs" />
+    <Compile Include="Contracts\AlbumUpdateContract.cs" />
     <Compile Include="Contracts\CommentContentContract.cs" />
     <Compile Include="Contracts\CommentContract.cs" />
     <Compile Include="Contracts\GalleryContract.cs" />
+    <Compile Include="Contracts\ImageContract.cs" />
+    <Compile Include="Contracts\ImageUpdateContract.cs" />
     <Compile Include="Contracts\UploadImageContract.cs" />
     <Compile Include="Contracts\VoteContract.cs" />
     <Compile Include="Forms\GalleryDetailForm.cs">
@@ -111,22 +132,47 @@
     <Compile Include="Forms\GalleryForm.Designer.cs">
       <DependentUpon>GalleryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ImageEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImageEditForm.Designer.cs">
+      <DependentUpon>ImageEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AlbumsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AlbumsForm.Designer.cs">
+      <DependentUpon>AlbumsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\AlbumsModelWithVote.cs" />
     <Compile Include="Models\GalleryDetailModel.cs" />
     <Compile Include="Models\VoteModel.cs" />
+    <Compile Include="Presenters\AccountImagesPresenter.cs" />
+    <Compile Include="Presenters\AlbumFavoritePresenter.cs" />
+    <Compile Include="Presenters\AlbumImagesPresenter.cs" />
+    <Compile Include="Presenters\AlbumUpdatePresenter.cs" />
     <Compile Include="Presenters\CommentContentPresenter.cs" />
     <Compile Include="Presenters\CommentsPresenter.cs" />
     <Compile Include="Presenters\CommentsVotePresenter.cs" />
     <Compile Include="Presenters\GalleryItemPresenter.cs" />
     <Compile Include="Presenters\GalleryPresenter.cs" />
+    <Compile Include="Presenters\ImageGetPresenter.cs" />
     <Compile Include="Presenters\ImageUploadPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Debounce.cs" />
     <EmbeddedResource Include="Components\CommentComponent\CommentComponent.resx">
       <DependentUpon>CommentComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\GalleryItemComponent\GalleryItemForm.resx">
       <DependentUpon>GalleryItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\AlbumItemComponent\AlbumItemComponent.resx">
+      <DependentUpon>AlbumItemComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\ImageItemComponent\ImageItemComponent.resx">
+      <DependentUpon>ImageItemComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\PaginationComponent\PaginationComponent.resx">
       <DependentUpon>PaginationComponent.cs</DependentUpon>
@@ -139,6 +185,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GalleryForm.resx">
       <DependentUpon>GalleryForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImageEditForm.resx">
+      <DependentUpon>ImageEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AlbumsForm.resx">
+      <DependentUpon>AlbumsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -149,6 +202,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

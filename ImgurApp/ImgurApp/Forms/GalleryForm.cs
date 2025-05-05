@@ -2,6 +2,7 @@
 using ImgurAPI.Models.Params;
 using ImgurApp.Components;
 using ImgurApp.Contracts;
+using ImgurApp.Forms;
 using ImgurApp.Models;
 using ImgurApp.Presenters;
 using System;
@@ -17,9 +18,10 @@ using System.Windows.Forms;
 
 namespace ImgurApp
 {
-    public partial class GalleryForm : Form, IGalleryView
+    public partial class GalleryForm : Form, IGalleryView, IImageUploadView
     {
         private readonly IGalleryPresenter _presenter;
+        private readonly IImageUploadPresenter _imageUploadPresenter;
 
         private GallerySearchModel _response;
 
@@ -35,6 +37,8 @@ namespace ImgurApp
                 new string[] { "day", "week", "month", "year", "all" };
 
             this._presenter = new GalleryPresenter(this);
+            this._imageUploadPresenter =
+                new ImageUploadPresenter(this);
 
             this.pagination1.ItemPrePages = 4;
             this.pagination1.PageNumberChange += PageNumberChange;
@@ -72,6 +76,36 @@ namespace ImgurApp
                 (int)numericUpDown1.Value,
                 queryTextBox.Text);
             this._presenter.SearchGalleryAsync(param);
+        }
+
+        private void 相簿ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AlbumsForm form = new AlbumsForm();
+            form.Show();
+        }
+
+        private async void 相片上傳ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // 選擇相片
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif",
+                Title = "選擇要上傳的相片"
+            };
+            // 上傳相片
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                await this._imageUploadPresenter.ImageUpload(
+                    new ImageUploadParam(filePath));
+            }
+        }
+
+        public void GetImageUploadResponse(ImageUploadModel image)
+        {
+            string url = image.data.account_url;
+            ImageEditForm form = new ImageEditForm(url);
+            form.Show();
         }
     }
 }

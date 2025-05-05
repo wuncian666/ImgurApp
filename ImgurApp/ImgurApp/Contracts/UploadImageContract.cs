@@ -15,6 +15,6 @@ namespace ImgurApp.Contracts
 
     public interface IImageUploadView
     {
-        void AddImageLinkToTextBox(ImageUploadModel image);
+        void GetImageUploadResponse(ImageUploadModel image);
     }
 }

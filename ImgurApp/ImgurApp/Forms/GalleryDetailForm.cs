@@ -21,13 +21,15 @@ namespace ImgurApp.Forms
     public partial class GalleryDetailForm :
         Form,
         ICommentsView,
-        IImageUploadView
+        IImageUploadView,
+        IAlbumFavoriteView
     {
         private readonly GalleryDetailModel _detailModel;
         private readonly VoteModel _voteModel;
 
         private readonly CommentsPresenter _commentsPresenter;
         private readonly ImageUploadPresenter _imageUploadPresenter;
+        private readonly AlbumFavoritePresenter _albumFavoritePresenter;
 
         private CommentComponent _selectedComponent;
 
@@ -42,6 +44,7 @@ namespace ImgurApp.Forms
 
             this._commentsPresenter = new CommentsPresenter(this);
             this._imageUploadPresenter = new ImageUploadPresenter(this);
+            this._albumFavoritePresenter = new AlbumFavoritePresenter(this);
 
             CommentEvents.ReplyButtonClicked += this.OnCommentReplyButtonClicked;
             _ = this.LoadCommentsAsync();
@@ -69,6 +72,10 @@ namespace ImgurApp.Forms
             this.userNameLabel.Text = this._detailModel.Account_url;
             this.titleLabel.Text = this._detailModel.Title;
             this.idLabel.Text = this._detailModel.Id;
+
+            this.favoriteLabel.ForeColor = (this._detailModel.Favorite) ?
+                Color.Red : Color.Black;
+
             foreach (var image in this._detailModel.Images)
             {
                 PictureBox picture = new PictureBox
@@ -138,7 +145,7 @@ namespace ImgurApp.Forms
             }
         }
 
-        public void AddImageLinkToTextBox(ImageUploadModel image)
+        public void GetImageUploadResponse(ImageUploadModel image)
         {
             this.commentBox.Text += image.data.link;
         }
@@ -147,6 +154,18 @@ namespace ImgurApp.Forms
             CommentsModel.Datum comment)
         {
             return new CommentComponent(comment);
+        }
+
+        public void FavoriteUpdated()
+        {
+            this.favoriteLabel.ForeColor = (this._detailModel.Favorite) ?
+                Color.Black : Color.Red;
+            this._detailModel.Favorite = !this._detailModel.Favorite;
+        }
+
+        private async void FavoriteLabel_ClickAsync(object sender, EventArgs e)
+        {
+            await this._albumFavoritePresenter.AddToFavoritesAsync(this._detailModel.Id);
         }
     }
 }

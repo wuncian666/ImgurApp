@@ -15,5 +15,7 @@ namespace ImgurApp.Models
         public string Account_url { get; set; }
 
         public Image[] Images { get; set; }
+
+        public bool Favorite { get; set; }
     }
 }
