@@ -19,7 +19,7 @@ namespace ImgurApp.Presenters
             // 發送 API 請求
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
             string voteStr = item.NewVote.ToString().ToLower();
-            context.Album.AlbumImageVoting(item.ItemId, voteStr);
+            context.Gallery.AlbumImageVoting(item.ItemId, voteStr);
 
             this._view.UpdateVoteComponent(item);
         }

@@ -1,4 +1,5 @@
-﻿using ImgurApp.Components.ImageItemComponent;
+﻿using ImgurAPI.Models;
+using ImgurApp.Components.ImageItemComponent;
 using ImgurApp.Contracts;
 using ImgurApp.Models;
 using ImgurApp.Presenters;
@@ -16,11 +17,16 @@ namespace ImgurApp.Forms
         {
             InitializeComponent();
 
-            this._presenter = new AccountImagesPresenter(this);
+            this._presenter = new AlbumsPresenter(this);
             this._presenter.GetAlbumsAsync();
         }
 
-        public void AlbumsLoaded(List<AlbumsModelWithVote> response)
+        public void AlbumsLoaded(AlbumsModel.Datum[] response)
+        {
+            this._presenter.GetAlbumWithVoteAsync(response);
+        }
+
+        public void AlbumsWithVoteLoaded(List<AlbumsModelWithVote> response)
         {
             for (int i = 0; i < response.Count(); i++)
             {

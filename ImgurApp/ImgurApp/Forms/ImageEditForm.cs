@@ -1,6 +1,7 @@
 ﻿using ImgurAPI.Models;
 using ImgurApp.Components.ImageItemComponent;
 using ImgurApp.Contracts;
+using ImgurApp.Models;
 using ImgurApp.Presenters;
 using ImgurApp.Utils;
 using System.Linq;
@@ -32,7 +33,14 @@ namespace ImgurApp.Forms
             for (int i = 0; i < response.data.Count(); i++)
             {
                 var image = response.data[i];
-                var item = new ImageItemComponent(image.link);
+                var model = new ImageItemModel
+                {
+                    id = image.id,
+                    title = (string)image.title,
+                    description = (string)image.description,
+                    link = image.link,
+                };
+                var item = new ImageItemComponent(model);
                 this.imageContainer.Controls.Add(item);
             }
         }

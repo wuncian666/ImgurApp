@@ -6,36 +6,41 @@ using ImgurApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ImgurApp.Presenters
 {
-    internal class AccountImagesPresenter : IAlbumsPresenter
+    internal class AlbumsPresenter : IAlbumsPresenter
     {
         private readonly IAlbumsView _view;
+        private readonly ImgurContext _context;
 
-        public AccountImagesPresenter(IAlbumsView view)
+        public AlbumsPresenter(IAlbumsView view)
         {
             _view = view;
+            _context = new ImgurContext();
         }
 
         public async Task GetAlbumsAsync()
         {
-            ImgurContext context = new ImgurContext();
-            var response = await context.Account.GetAlbums(
+            var response = await _context.Account.GetAlbums(
                 AccountModel.Account_url, "0");
             if (!response.success)
             {
                 throw new Exception("Failed to load account images");
             }
 
+            this._view.AlbumsLoaded(response.data);
+        }
+
+        public async Task GetAlbumWithVoteAsync(AlbumsModel.Datum[] response)
+        {
             List<AlbumsModelWithVote> results = new List<AlbumsModelWithVote>();
 
-            for (int i = 0; i < response.data.Count(); i++)
+            for (int i = 0; i < response.Count(); i++)
             {
                 AlbumImageVotesModel voteResponse =
-                    await context.Album.AlbumImageVotes(response.data[i].id);
+                    await _context.Gallery.AlbumImageVotes(response[i].id);
 
                 var config = new MapperConfiguration(cfg =>
                 {
@@ -55,7 +60,7 @@ namespace ImgurApp.Presenters
 
                 var mapper = config.CreateMapper();
 
-                var albumWithVote = mapper.Map<AlbumsModelWithVote>(response.data[i]);
+                var albumWithVote = mapper.Map<AlbumsModelWithVote>(response[i]);
                 if (voteResponse == null || voteResponse.data == null)
                 {
                     albumWithVote.ups = 0;
@@ -69,7 +74,7 @@ namespace ImgurApp.Presenters
                 results.Add(albumWithVote);
             }
 
-            _view.AlbumsLoaded(results);
+            _view.AlbumsWithVoteLoaded(results);
         }
     }
 }

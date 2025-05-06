@@ -23,7 +23,7 @@ namespace ImgurApp.Presenters
                 GallerySearchModel response = await context.Gallery.GallerySearch(param);
                 this._view.ShowGallery(response);
             }
-            catch (System.IndexOutOfRangeException ex)
+            catch (Exception ex)
             {
                 // Log the exception or handle it as needed
                 Console.WriteLine($"IndexOutOfRangeException: {ex.Message}");

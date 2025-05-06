@@ -1,6 +1,5 @@
 ﻿using ImgurAPI;
 using ImgurApp.Contracts;
-using System;
 using System.Threading.Tasks;
 
 namespace ImgurApp.Presenters
@@ -17,9 +16,8 @@ namespace ImgurApp.Presenters
         public async Task UpdateAlbumAsync(string id, string[] ids, string title, string description)
         {
             ImgurContext context = new ImgurContext();
-            var result = await context.Album.UpdateAlbum(
+            _ = await context.Album.UpdateAlbum(
                 id, ids, title, description);
-            Console.WriteLine($"{result.data}");
         }
     }
 }

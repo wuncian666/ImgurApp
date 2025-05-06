@@ -1,9 +1,5 @@
 ﻿using ImgurAPI.Models;
 using ImgurApp.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ImgurApp.Presenters
@@ -20,7 +16,7 @@ namespace ImgurApp.Presenters
         public async Task AddToFavoritesAsync(string albumId)
         {
             ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
-            BasicResponseModel response = await context.Album.AlbumImageFavorite(albumId);
+            BasicResponse response = await context.Album.AlbumImageFavorite(albumId);
             if (response.success)
             {
                 _view.FavoriteUpdated();

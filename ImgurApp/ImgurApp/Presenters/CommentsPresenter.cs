@@ -1,4 +1,5 @@
-﻿using ImgurAPI.Models;
+﻿using ImgurAPI;
+using ImgurAPI.Models;
 using ImgurApp.Contracts;
 using ImgurApp.Models;
 using Newtonsoft.Json;
@@ -18,11 +19,11 @@ namespace ImgurApp.Presenters
 
         public async Task GetCommentsAsync(string galleryId)
         {
-            ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
+            ImgurContext context = new ImgurAPI.ImgurContext();
             try
             {
                 CommentsModel response =
-                await context.Comment.GetComments(galleryId);
+                    await context.Gallery.GetComments(galleryId);
                 this._view.ShowComments(response);
             }
             catch (JsonReaderException ex)
@@ -42,10 +43,9 @@ namespace ImgurApp.Presenters
                 await this.ReplyCreationAsync(imageId, parentId, comment);
                 return;
             }
-            Console.WriteLine("add main");
 
             parentId = null;
-            ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
+            ImgurContext context = new ImgurContext();
             _ = await context.Comment.CommentCreation(imageId, comment, parentId);
 
             var commentModel = new CommentsModel.Datum
@@ -54,12 +54,13 @@ namespace ImgurApp.Presenters
                 comment = comment,
                 author = AccountModel.Account_url,
             };
+
             this._view.AddCommentToContainer(commentModel);
         }
 
         public async Task ReplyCreationAsync(string imageId, string commentId, string comment)
         {
-            ImgurAPI.ImgurContext context = new ImgurAPI.ImgurContext();
+            ImgurContext context = new ImgurContext();
             var response = await context.Comment.ReplyCreation(imageId, commentId, comment);
 
             long.TryParse(commentId, out long parentId);

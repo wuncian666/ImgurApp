@@ -1,9 +1,6 @@
 ﻿using ImgurAPI.Models;
 using ImgurApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ImgurApp.Contracts
@@ -11,10 +8,14 @@ namespace ImgurApp.Contracts
     public interface IAlbumsPresenter
     {
         Task GetAlbumsAsync();
+
+        Task GetAlbumWithVoteAsync(AlbumsModel.Datum[] response);
     }
 
     public interface IAlbumsView
     {
-        void AlbumsLoaded(List<AlbumsModelWithVote> response);
+        void AlbumsLoaded(AlbumsModel.Datum[] response);
+
+        void AlbumsWithVoteLoaded(List<AlbumsModelWithVote> response);
     }
 }

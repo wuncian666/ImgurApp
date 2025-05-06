@@ -96,8 +96,7 @@ namespace ImgurApp
 
         public void GetImageUploadResponse(ImageUploadModel image)
         {
-            string url = image.data.account_url;
-            ImageEditForm form = new ImageEditForm(url);
+            ImageUploadForm form = new ImageUploadForm(image);
             form.Show();
         }
     }
